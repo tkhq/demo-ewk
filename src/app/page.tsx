@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { useEffect, useState } from "react";
-import { Auth, useTurnkey } from "@turnkey/sdk-react";
-import { Typography } from "@mui/material";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import CustomSwitch from "./components/Switch";
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { Auth, useTurnkey } from '@turnkey/sdk-react';
+import { Typography } from '@mui/material';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CustomSwitch from './components/Switch';
 import {
   DragDropContext,
   Droppable,
@@ -13,11 +13,11 @@ import {
   DropResult,
   DroppableProvided,
   DraggableProvided,
-} from "@hello-pangea/dnd";
-import "./index.css";
-import { useRouter } from "next/navigation";
-import Navbar from "./components/Navbar";
-import { Toaster, toast } from "sonner";
+} from '@hello-pangea/dnd';
+import './index.css';
+import { useRouter } from 'next/navigation';
+import Navbar from './components/Navbar';
+import { Toaster, toast } from 'sonner';
 
 // Define reusable types for provided props
 type DroppableProvidedProps = DroppableProvided;
@@ -37,26 +37,29 @@ interface Config {
   email: boolean;
   passkey: boolean;
   phone: boolean;
+  wallet: boolean;
   socials: SocialConfig;
 }
 
 export default function AuthPage() {
   const router = useRouter();
   const handleAuthSuccess = async () => {
-    router.push("/dashboard");
+    router.push('/dashboard');
   };
   const { turnkey } = useTurnkey();
   const [configOrder, setConfigOrder] = useState([
-    "socials",
-    "email",
-    "phone",
-    "passkey",
+    'socials',
+    'email',
+    'phone',
+    'passkey',
+    'wallet',
   ]);
 
   const [config, setConfig] = useState<Config>({
     email: true,
     phone: false,
     passkey: true,
+    wallet: true,
     socials: {
       enabled: true,
       providers: {
@@ -82,7 +85,7 @@ export default function AuthPage() {
   const toggleConfig = (key: keyof Config) => {
     setConfig((prev) => {
       const newConfig = { ...prev };
-      if (key !== "socials") {
+      if (key !== 'socials') {
         newConfig[key] = !prev[key];
       }
       return newConfig;
@@ -90,10 +93,10 @@ export default function AuthPage() {
   };
 
   const toggleSocials = (
-    key: keyof SocialConfig | keyof SocialConfig["providers"]
+    key: keyof SocialConfig | keyof SocialConfig['providers']
   ) => {
     setConfig((prev) => {
-      if (key === "enabled") {
+      if (key === 'enabled') {
         const isEnabled = !prev.socials.enabled;
         return {
           ...prev,
@@ -116,7 +119,7 @@ export default function AuthPage() {
             providers: {
               ...prev.socials.providers,
               [key]:
-                !prev.socials.providers[key as keyof SocialConfig["providers"]],
+                !prev.socials.providers[key as keyof SocialConfig['providers']],
             },
           },
         };
@@ -131,6 +134,7 @@ export default function AuthPage() {
       emailEnabled: config.email,
       passkeyEnabled: config.passkey,
       phoneEnabled: config.phone,
+      walletEnabled: config.wallet,
       appleEnabled: config.socials.providers.apple,
       googleEnabled: config.socials.providers.google,
       facebookEnabled: config.socials.providers.facebook,
@@ -141,13 +145,14 @@ export default function AuthPage() {
       configOrder,
     };
     navigator.clipboard.writeText(JSON.stringify(configToCopy, null, 2));
-    toast.success("Copied to clipboard!");
+    toast.success('Copied to clipboard!');
   };
 
   const authConfig = {
     emailEnabled: config.email,
     passkeyEnabled: config.passkey,
     phoneEnabled: config.phone,
+    walletEnabled: config.wallet,
     appleEnabled: config.socials.providers.apple,
     googleEnabled: config.socials.providers.google,
     facebookEnabled: config.socials.providers.facebook,
@@ -179,7 +184,7 @@ export default function AuthPage() {
                 className="toggleContainer"
               >
                 {configOrder.map((key, index) =>
-                  key === "socials" ? (
+                  key === 'socials' ? (
                     <Draggable
                       key="socials"
                       draggableId="socials"
@@ -202,7 +207,7 @@ export default function AuthPage() {
                             </div>
                             <CustomSwitch
                               checked={config.socials.enabled}
-                              onChange={() => toggleSocials("enabled")}
+                              onChange={() => toggleSocials('enabled')}
                             />
                           </div>
                           {Object.entries(config.socials.providers).map(
@@ -212,10 +217,10 @@ export default function AuthPage() {
                                 className="toggleSocialIndividualRow"
                                 style={{
                                   borderRadius:
-                                    provider === "google"
-                                      ? "8px 8px 0 0"
-                                      : provider === "facebook"
-                                      ? "0 0 8px 8px"
+                                    provider === 'google'
+                                      ? '8px 8px 0 0'
+                                      : provider === 'facebook'
+                                      ? '0 0 8px 8px'
                                       : undefined,
                                 }}
                               >
@@ -233,7 +238,7 @@ export default function AuthPage() {
                                   checked={enabled}
                                   onChange={() =>
                                     toggleSocials(
-                                      provider as keyof SocialConfig["providers"]
+                                      provider as keyof SocialConfig['providers']
                                     )
                                   }
                                 />
@@ -249,7 +254,7 @@ export default function AuthPage() {
                       draggableId={key}
                       index={index}
                       isDragDisabled={
-                        key !== "socials" &&
+                        key !== 'socials' &&
                         (!config[key as keyof Config] as boolean)
                       }
                     >
@@ -296,13 +301,13 @@ export default function AuthPage() {
           configOrder={configOrder}
           onAuthSuccess={handleAuthSuccess}
           onError={(errorMessage: string) => toast.error(errorMessage)}
-          customSmsMessage={"Your Turnkey Demo OTP is {{.OtpCode}}"}
+          customSmsMessage={'Your Turnkey Demo OTP is {{.OtpCode}}'}
         />
       </div>
       <div>
         <Toaster
           position="bottom-right"
-          toastOptions={{ className: "sonner-toaster", duration: 2500 }}
+          toastOptions={{ className: 'sonner-toaster', duration: 2500 }}
         />
       </div>
     </main>
