@@ -28,7 +28,7 @@ import {
 } from '@mui/material'
 
 import WalletIcon from '@mui/icons-material/AccountBalanceWalletOutlined'
-import MailIcon from '@mui/icons-material/MarkEmailReadOutlined'
+import MailIcon from '@mui/icons-material/EmailOutlined'
 import PhoneIcon from '@mui/icons-material/PhoneAndroidOutlined'
 import LogoutIcon from '@mui/icons-material/LogoutOutlined'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
@@ -567,11 +567,12 @@ export default function Dashboard() {
               <Typography>Wallet</Typography>
             </div>
             {user &&
-            user.authenticators &&
-            user.authenticators.some(
-              auth =>
-                auth.credential?.type === 'CREDENTIAL_TYPE_API_KEY_SECP256K1' &&
-                auth.credential?.type === 'CREDENTIAL_TYPE_API_KEY_SECP256K1'
+            user.apiKeys &&
+            user.apiKeys.some(
+              key =>
+                key.credential?.type === 'CREDENTIAL_TYPE_API_KEY_SECP256K1' &&
+                // Auth Components set wallet authenticator key names to `wallet-auth:<wallet-public-key>`
+                key.apiKeyName.startsWith('wallet')
             ) ? (
               <CheckCircleIcon sx={{ color: '#4c48ff' }} />
             ) : (
