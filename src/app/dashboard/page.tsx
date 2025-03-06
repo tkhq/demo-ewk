@@ -1,16 +1,19 @@
-"use client";
+'use client';
 
+import { useEffect, useState } from 'react';
+import { Toaster, toast } from 'sonner';
+import { keccak256, toUtf8Bytes } from 'ethers';
+import { useRouter } from 'next/navigation';
 import {
   Export,
   Import,
   useTurnkey,
   OtpVerification,
   OtpType,
-} from "@turnkey/sdk-react";
+} from '@turnkey/sdk-react';
+import { server } from '@turnkey/sdk-server';
 
-
-import { useEffect, useState } from "react";
-import "./dashboard.css";
+import './dashboard.css';
 import {
   Typography,
   Radio,
@@ -22,49 +25,61 @@ import {
   MenuItem,
   Menu,
   CircularProgress,
-} from "@mui/material";
-import LogoutIcon from "@mui/icons-material/Logout";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+} from '@mui/material';
+
+import WalletIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+import MailIcon from '@mui/icons-material/MarkEmailReadOutlined';
+import PhoneIcon from '@mui/icons-material/PhoneAndroidOutlined';
+import LogoutIcon from '@mui/icons-material/LogoutOutlined';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import LaunchIcon from '@mui/icons-material/Launch';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
 import {
   verifyEthSignatureWithAddress,
   verifySolSignatureWithAddress,
-} from "../utils";
-import { keccak256, toUtf8Bytes } from "ethers";
-import { useRouter } from "next/navigation";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import LaunchIcon from "@mui/icons-material/Launch";
+} from '../utils';
+
 import {
   appleOidcToken,
   facebookOidcToken,
   googleOidcToken,
-} from "../utils/oidc";
-import { MuiPhone } from "../components/PhoneInput";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import Navbar from "../components/Navbar";
-import { Toaster, toast } from "sonner";
-import { server} from "@turnkey/sdk-server";
+} from '../utils/oidc';
+import { MuiPhone } from '../components/PhoneInput';
+
+import Navbar from '../components/Navbar';
+import { TurnkeyApiTypes } from '@turnkey/sdk-browser';
+
+interface Signature {
+  r: string;
+  s: string;
+  v: string;
+}
 
 export default function Dashboard() {
   const router = useRouter();
   const { turnkey, authIframeClient, passkeyClient } = useTurnkey();
   const [loading, setLoading] = useState(true);
-  const [accounts, setAccounts] = useState<any>([]);
-  const [wallets, setWallets] = useState<any[]>([]);
+  const [accounts, setAccounts] = useState<
+    TurnkeyApiTypes['v1WalletAccount'][]
+  >([]);
+  const [wallets, setWallets] = useState<TurnkeyApiTypes['v1Wallet'][]>([]);
   const [selectedAccount, setSelectedAccount] = useState<string | null>(null);
   const [selectedWallet, setSelectedWallet] = useState<string | null>(null);
   const [isSignModalOpen, setIsSignModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isPasskeyModalOpen, setIsPasskeyModalOpen] = useState(false);
   const [messageToSign, setMessageToSign] = useState(
-    "Signing within Turnkey Demo."
+    'Signing within Turnkey Demo.'
   );
-  const [signature, setSignature] = useState<any>(null);
-  const [suborgId, setSuborgId] = useState<string>("");
+  const [signature, setSignature] = useState<Signature | null>(null);
+  const [suborgId, setSuborgId] = useState<string>('');
   const [isVerifiedEmail, setIsVerifiedEmail] = useState<boolean>(false);
   const [isVerifiedPhone, setIsVerifiedPhone] = useState<boolean>(false);
-  const [user, setUser] = useState<any>("");
-  const [otpId, setOtpId] = useState("");
+  const [user, setUser] = useState<TurnkeyApiTypes['v1User'] | null>(null);
+  const [otpId, setOtpId] = useState('');
   const [messageSigningResult, setMessageSigningResult] = useState<
     string | null
   >(null);
@@ -73,15 +88,15 @@ export default function Dashboard() {
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
-  const [emailInput, setEmailInput] = useState("");
-  const [phoneInput, setPhoneInput] = useState("");
+  const [emailInput, setEmailInput] = useState('');
+  const [phoneInput, setPhoneInput] = useState('');
 
   const handleExportSuccess = async () => {
-    toast.success("Wallet successfully exported");
+    toast.success('Wallet successfully exported');
   };
   const handleImportSuccess = async () => {
     await getWallets();
-    toast.success("Wallet successfully imported");
+    toast.success('Wallet successfully imported');
   };
   const handleResendEmail = async () => {
     const initAuthResponse = await server.sendOtp({
@@ -91,7 +106,7 @@ export default function Dashboard() {
       userIdentifier: authIframeClient?.iframePublicKey!,
     });
     if (!initAuthResponse || !initAuthResponse.otpId!) {
-      toast.error("Failed to send OTP");
+      toast.error('Failed to send OTP');
       return;
     }
     setOtpId(initAuthResponse?.otpId!);
@@ -101,11 +116,11 @@ export default function Dashboard() {
       suborgID: suborgId,
       otpType: OtpType.Sms,
       contact: phoneInput,
-      customSmsMessage: "Your Turnkey Demo OTP is {{.OtpCode}}",
+      customSmsMessage: 'Your Turnkey Demo OTP is {{.OtpCode}}',
       userIdentifier: authIframeClient?.iframePublicKey!,
     });
     if (!initAuthResponse || !initAuthResponse.otpId!) {
-      toast.error("Failed to send OTP");
+      toast.error('Failed to send OTP');
       return;
     }
     setOtpId(initAuthResponse?.otpId!);
@@ -122,20 +137,20 @@ export default function Dashboard() {
   };
   const handleEmailSubmit = async () => {
     if (!emailInput) {
-      toast.error("Please enter a valid email address");
+      toast.error('Please enter a valid email address');
       return;
     }
     const suborgs = await server.getVerifiedSuborgs({
-      filterType: "EMAIL",
+      filterType: 'EMAIL',
       filterValue: emailInput,
     });
     if (suborgs && suborgs!.organizationIds.length > 0) {
-      toast.error("Email is already connected to another account");
+      toast.error('Email is already connected to another account');
       return;
     }
     await authIframeClient?.updateUser({
       organizationId: suborgId,
-      userId: user.userId,
+      userId: user?.userId || '',
       userEmail: emailInput,
       userTagIds: [],
     });
@@ -146,7 +161,7 @@ export default function Dashboard() {
       userIdentifier: authIframeClient?.iframePublicKey!,
     });
     if (!initAuthResponse || !initAuthResponse.otpId!) {
-      toast.error("Failed to send OTP");
+      toast.error('Failed to send OTP');
       return;
     }
     setOtpId(initAuthResponse?.otpId!);
@@ -156,20 +171,20 @@ export default function Dashboard() {
 
   const handlePhoneSubmit = async () => {
     if (!phoneInput) {
-      toast.error("Please enter a valid phone number.");
+      toast.error('Please enter a valid phone number.');
       return;
     }
     const suborgs = await server.getVerifiedSuborgs({
-      filterType: "PHONE_NUMBER",
+      filterType: 'PHONE_NUMBER',
       filterValue: phoneInput,
     });
     if (suborgs && suborgs!.organizationIds.length > 0) {
-      toast.error("Phone Number is already connected to another account");
+      toast.error('Phone Number is already connected to another account');
       return;
     }
     await authIframeClient?.updateUser({
       organizationId: suborgId,
-      userId: user.userId,
+      userId: user?.userId || '',
       userPhoneNumber: phoneInput,
       userTagIds: [],
     });
@@ -177,11 +192,11 @@ export default function Dashboard() {
       suborgID: suborgId,
       otpType: OtpType.Sms,
       contact: phoneInput,
-      customSmsMessage: "Your Turnkey Demo OTP is {{.OtpCode}}",
+      customSmsMessage: 'Your Turnkey Demo OTP is {{.OtpCode}}',
       userIdentifier: authIframeClient?.iframePublicKey!,
     });
     if (!initAuthResponse || !initAuthResponse.otpId!) {
-      toast.error("Failed to send OTP");
+      toast.error('Failed to send OTP');
       return;
     }
     setOtpId(initAuthResponse?.otpId!);
@@ -192,7 +207,7 @@ export default function Dashboard() {
   const handleAddOauth = async (oauthType: string) => {
     let oidcToken;
     switch (oauthType) {
-      case "Apple":
+      case 'Apple':
         oidcToken = await appleOidcToken({
           iframePublicKey: authIframeClient?.iframePublicKey!,
           clientId: process.env.NEXT_PUBLIC_APPLE_CLIENT_ID!,
@@ -201,7 +216,7 @@ export default function Dashboard() {
         });
         break;
 
-      case "Facebook":
+      case 'Facebook':
         oidcToken = await facebookOidcToken({
           iframePublicKey: authIframeClient?.iframePublicKey!,
           clientId: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID!,
@@ -210,7 +225,7 @@ export default function Dashboard() {
         });
         break;
 
-      case "Google":
+      case 'Google':
         oidcToken = await googleOidcToken({
           iframePublicKey: authIframeClient?.iframePublicKey!,
           clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
@@ -224,16 +239,16 @@ export default function Dashboard() {
     }
     if (oidcToken) {
       const suborgs = await server.getSuborgs({
-        filterType: "OIDC_TOKEN",
+        filterType: 'OIDC_TOKEN',
         filterValue: oidcToken.idToken,
       });
       if (suborgs!.organizationIds.length > 0) {
-        toast.error("Social login is already connected to another account");
+        toast.error('Social login is already connected to another account');
         return;
       }
       await authIframeClient?.createOauthProviders({
         organizationId: suborgId,
-        userId: user.userId,
+        userId: user?.userId || '',
         oauthProviders: [
           {
             providerName: `TurnkeyDemoApp - ${Date.now()}`,
@@ -249,12 +264,12 @@ export default function Dashboard() {
     const siteInfo = `${
       new URL(window.location.href).hostname
     } - ${new Date().toLocaleString(undefined, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
     })}`;
     const { encodedChallenge, attestation } =
       (await passkeyClient?.createUserPasskey({
@@ -264,7 +279,7 @@ export default function Dashboard() {
     if (encodedChallenge && attestation) {
       await authIframeClient?.createAuthenticators({
         organizationId: suborgId,
-        userId: user.userId,
+        userId: user?.userId || '',
         authenticators: [
           {
             authenticatorName: `Passkey - ${Date.now()}`,
@@ -295,7 +310,7 @@ export default function Dashboard() {
 
   const handleLogout: any = async () => {
     turnkey?.logoutUser();
-    router.push("/");
+    router.push('/');
   };
   useEffect(() => {
     const manageSession = async () => {
@@ -324,7 +339,7 @@ export default function Dashboard() {
           setWallets(walletsResponse.wallets);
           if (userResponse.user.userEmail) {
             const suborgs = await server.getVerifiedSuborgs({
-              filterType: "EMAIL",
+              filterType: 'EMAIL',
               filterValue: userResponse.user.userEmail,
             });
 
@@ -338,7 +353,7 @@ export default function Dashboard() {
           }
           if (userResponse.user.userPhoneNumber) {
             const suborgs = await server.getVerifiedSuborgs({
-              filterType: "PHONE_NUMBER",
+              filterType: 'PHONE_NUMBER',
               filterValue: userResponse.user.userPhoneNumber,
             });
             if (
@@ -388,7 +403,7 @@ export default function Dashboard() {
 
   const handleSignMessageClick = () => {
     if (!selectedAccount) {
-      toast.error("Please select an account first!");
+      toast.error('Please select an account first!');
       return;
     }
     setIsSignModalOpen(true);
@@ -419,34 +434,40 @@ export default function Dashboard() {
 
   const handleSign = async () => {
     try {
-      const addressType = selectedAccount?.startsWith("0x") ? "ETH" : "SOL";
+      const addressType = selectedAccount?.startsWith('0x') ? 'ETH' : 'SOL';
       const hashedMessage =
-        addressType === "ETH"
+        addressType === 'ETH'
           ? keccak256(toUtf8Bytes(messageToSign)) // Ethereum requires keccak256 hash
-          : Buffer.from(messageToSign, "utf8").toString("hex"); // Solana doesn't require hashing
+          : Buffer.from(messageToSign, 'utf8').toString('hex'); // Solana doesn't require hashing
 
       const resp = await authIframeClient?.signRawPayload({
         organizationId: suborgId!,
         signWith: selectedAccount!,
         payload: hashedMessage,
-        encoding: "PAYLOAD_ENCODING_HEXADECIMAL",
+        encoding: 'PAYLOAD_ENCODING_HEXADECIMAL',
         hashFunction:
-          addressType === "ETH"
-            ? "HASH_FUNCTION_NO_OP"
-            : "HASH_FUNCTION_NOT_APPLICABLE",
+          addressType === 'ETH'
+            ? 'HASH_FUNCTION_NO_OP'
+            : 'HASH_FUNCTION_NOT_APPLICABLE',
       });
-      setMessageSigningResult("Success! Message signed.");
-      setSignature({ r: resp?.r, s: resp?.s, v: resp?.v });
+      setMessageSigningResult('Success! Message signed.');
+      if (resp?.r && resp?.s && resp?.v) {
+        setSignature({
+          r: resp.r,
+          s: resp.s,
+          v: resp.v,
+        });
+      }
     } catch (error) {
-      console.error("Error signing message:", error);
+      console.error('Error signing message:', error);
     }
   };
 
   const handleVerify = () => {
     if (!signature) return;
-    const addressType = selectedAccount?.startsWith("0x") ? "ETH" : "SOL";
+    const addressType = selectedAccount?.startsWith('0x') ? 'ETH' : 'SOL';
     const verificationPassed =
-      addressType === "ETH"
+      addressType === 'ETH'
         ? verifyEthSignatureWithAddress(
             messageToSign,
             signature.r,
@@ -463,8 +484,8 @@ export default function Dashboard() {
 
     setMessageSigningResult(
       verificationPassed
-        ? "Verified! The address used to sign the message matches your wallet address."
-        : "Verification failed."
+        ? 'Verified! The address used to sign the message matches your wallet address.'
+        : 'Verification failed.'
     );
   };
   if (loading) {
@@ -492,24 +513,24 @@ export default function Dashboard() {
         <div className="loginMethodContainer">
           <div className="loginMethodRow">
             <div className="labelContainer">
-              <img src="/mail.svg" className="iconSmall" />
+              <MailIcon />
               <Typography>Email</Typography>
               {user && user.userEmail && isVerifiedEmail && (
                 <span className="loginMethodDetails">{user.userEmail}</span>
               )}
             </div>
             {user && user.userEmail && isVerifiedEmail ? (
-              <CheckCircleIcon sx={{ color: "#4c48ff" }} />
+              <CheckCircleIcon sx={{ color: '#4c48ff' }} />
             ) : (
               <div onClick={handleOpenEmailModal}>
-                <AddCircleIcon sx={{ cursor: "pointer" }} />
+                <AddCircleIcon sx={{ cursor: 'pointer' }} />
               </div>
             )}
           </div>
 
           <div className="loginMethodRow">
             <div className="labelContainer">
-              <img src="/phone.svg" className="iconSmall" />
+              <PhoneIcon />
               <Typography>Phone</Typography>
               {user && user.userPhoneNumber && isVerifiedPhone && (
                 <span className="loginMethodDetails">
@@ -518,10 +539,10 @@ export default function Dashboard() {
               )}
             </div>
             {user && user.userPhoneNumber && isVerifiedPhone ? (
-              <CheckCircleIcon sx={{ color: "#4c48ff" }} />
+              <CheckCircleIcon sx={{ color: '#4c48ff' }} />
             ) : (
               <div onClick={handleOpenPhoneModal}>
-                <AddCircleIcon sx={{ cursor: "pointer" }} />
+                <AddCircleIcon sx={{ cursor: 'pointer' }} />
               </div>
             )}
           </div>
@@ -532,10 +553,30 @@ export default function Dashboard() {
               <Typography>Passkey</Typography>
             </div>
             {user && user.authenticators && user.authenticators.length > 0 ? (
-              <CheckCircleIcon sx={{ color: "#4c48ff" }} />
+              <CheckCircleIcon sx={{ color: '#4c48ff' }} />
             ) : (
               <div onClick={() => setIsPasskeyModalOpen(true)}>
-                <AddCircleIcon sx={{ cursor: "pointer" }} />
+                <AddCircleIcon sx={{ cursor: 'pointer' }} />
+              </div>
+            )}
+          </div>
+
+          <div className="loginMethodRow">
+            <div className="labelContainer">
+              <WalletIcon />
+              <Typography>Wallet</Typography>
+            </div>
+            {user &&
+            user.authenticators &&
+            user.authenticators.some(
+              (auth) =>
+                auth.credential?.type === 'CREDENTIAL_TYPE_API_KEY_SECP256K1' &&
+                auth.credential?.type === 'CREDENTIAL_TYPE_API_KEY_SECP256K1'
+            ) ? (
+              <CheckCircleIcon sx={{ color: '#4c48ff' }} />
+            ) : (
+              <div onClick={() => setIsPasskeyModalOpen(true)}>
+                <AddCircleIcon sx={{ cursor: 'pointer' }} />
               </div>
             )}
           </div>
@@ -548,18 +589,18 @@ export default function Dashboard() {
               {user &&
                 user.oauthProviders &&
                 user.oauthProviders.some((provider: { issuer: string }) =>
-                  provider.issuer.toLowerCase().includes("google")
+                  provider.issuer.toLowerCase().includes('google')
                 ) && <span className="loginMethodDetails">{}</span>}
             </div>
             {user &&
             user.oauthProviders &&
             user.oauthProviders.some((provider: { issuer: string }) =>
-              provider.issuer.toLowerCase().includes("google")
+              provider.issuer.toLowerCase().includes('google')
             ) ? (
-              <CheckCircleIcon sx={{ color: "#4c48ff" }} />
+              <CheckCircleIcon sx={{ color: '#4c48ff' }} />
             ) : (
-              <div onClick={() => handleAddOauth("Google")}>
-                <AddCircleIcon sx={{ cursor: "pointer" }} />
+              <div onClick={() => handleAddOauth('Google')}>
+                <AddCircleIcon sx={{ cursor: 'pointer' }} />
               </div>
             )}
           </div>
@@ -571,12 +612,12 @@ export default function Dashboard() {
             {user &&
             user.oauthProviders &&
             user.oauthProviders.some((provider: { issuer: string }) =>
-              provider.issuer.toLowerCase().includes("apple")
+              provider.issuer.toLowerCase().includes('apple')
             ) ? (
-              <CheckCircleIcon sx={{ color: "#4c48ff" }} />
+              <CheckCircleIcon sx={{ color: '#4c48ff' }} />
             ) : (
-              <div onClick={() => handleAddOauth("Apple")}>
-                <AddCircleIcon sx={{ cursor: "pointer" }} />
+              <div onClick={() => handleAddOauth('Apple')}>
+                <AddCircleIcon sx={{ cursor: 'pointer' }} />
               </div>
             )}
           </div>
@@ -588,12 +629,12 @@ export default function Dashboard() {
             {user &&
             user.oauthProviders &&
             user.oauthProviders.some((provider: { issuer: string }) =>
-              provider.issuer.toLowerCase().includes("facebook")
+              provider.issuer.toLowerCase().includes('facebook')
             ) ? (
-              <CheckCircleIcon sx={{ color: "#4c48ff" }} />
+              <CheckCircleIcon sx={{ color: '#4c48ff' }} />
             ) : (
-              <div onClick={() => handleAddOauth("Facebook")}>
-                <AddCircleIcon sx={{ cursor: "pointer" }} />
+              <div onClick={() => handleAddOauth('Facebook')}>
+                <AddCircleIcon sx={{ cursor: 'pointer' }} />
               </div>
             )}
           </div>
@@ -603,24 +644,24 @@ export default function Dashboard() {
         <div className="dashboardCard">
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              cursor: "pointer",
-              marginTop: "16px",
-              marginBottom: "16px",
+              display: 'flex',
+              alignItems: 'center',
+              cursor: 'pointer',
+              marginTop: '16px',
+              marginBottom: '16px',
             }}
             onClick={handleDropdownClick}
           >
             <Typography
               variant="body1"
               style={{
-                marginRight: "2px",
-                fontSize: "1.5rem",
-                fontWeight: "600",
+                marginRight: '2px',
+                fontSize: '1.5rem',
+                fontWeight: '600',
               }}
             >
               {wallets.find((wallet) => wallet.walletId === selectedWallet)
-                ?.walletName || "Select Wallet"}
+                ?.walletName || 'Select Wallet'}
             </Typography>
             <ArrowDropDownIcon />
           </div>
@@ -630,8 +671,8 @@ export default function Dashboard() {
             open={Boolean(anchorEl)}
             onClose={handleDropdownClose}
             sx={{
-              "& .MuiPaper-root": {
-                width: "112px",
+              '& .MuiPaper-root': {
+                width: '112px',
               },
             }}
           >
@@ -652,31 +693,31 @@ export default function Dashboard() {
                   className="accountRow"
                   onClick={() => setSelectedAccount(account.address)}
                   style={{
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
                   }}
                 >
                   <div
                     className="hoverContainer"
                     onClick={() =>
                       window.open(
-                        account.addressFormat === "ADDRESS_FORMAT_ETHEREUM"
+                        account.addressFormat === 'ADDRESS_FORMAT_ETHEREUM'
                           ? `https://etherscan.io/address/${account.address}`
                           : `https://solscan.io/account/${account.address}`,
-                        "_blank"
+                        '_blank'
                       )
                     }
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
                     }}
                   >
-                    {account.addressFormat === "ADDRESS_FORMAT_ETHEREUM" && (
+                    {account.addressFormat === 'ADDRESS_FORMAT_ETHEREUM' && (
                       <div className="eth-icon" />
                     )}
-                    {account.addressFormat === "ADDRESS_FORMAT_SOLANA" && (
+                    {account.addressFormat === 'ADDRESS_FORMAT_SOLANA' && (
                       <div className="sol-icon" />
                     )}
                     <span className="accountAddress">{`${account.address.slice(
@@ -690,16 +731,16 @@ export default function Dashboard() {
                     control={
                       <Radio
                         sx={{
-                          color: "var(--Greyscale-900, #2b2f33)",
-                          "&.Mui-checked": {
-                            color: "var(--Greyscale-900, #2b2f33)",
+                          color: 'var(--Greyscale-900, #2b2f33)',
+                          '&.Mui-checked': {
+                            color: 'var(--Greyscale-900, #2b2f33)',
                           },
                         }}
                       />
                     }
                     label=""
                     className="radioButton"
-                    style={{ pointerEvents: "none" }}
+                    style={{ pointerEvents: 'none' }}
                   />
                 </div>
               ))}
@@ -733,7 +774,7 @@ export default function Dashboard() {
                 onClick={() => setIsDeleteModalOpen(true)}
                 className="authFooterButton"
               >
-                <DeleteOutlineIcon sx={{ color: "#FB4E2B" }} />
+                <DeleteOutlineIcon sx={{ color: '#FB4E2B' }} />
                 <Typography>Delete account</Typography>
               </div>
             </div>
@@ -743,13 +784,13 @@ export default function Dashboard() {
       <Modal open={isDeleteModalOpen}>
         <Box
           sx={{
-            outline: "none",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
+            outline: 'none',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
             width: 400,
-            bgcolor: "var(--Greyscale-20, #f5f7fb)",
+            bgcolor: 'var(--Greyscale-20, #f5f7fb)',
             boxShadow: 24,
             p: 4,
             borderRadius: 2,
@@ -758,15 +799,15 @@ export default function Dashboard() {
           <div
             onClick={() => setIsDeleteModalOpen(false)}
             style={{
-              position: "absolute",
-              top: "16px",
-              right: "16px",
-              background: "none",
-              border: "none",
-              fontSize: "20px",
-              fontWeight: "bold",
-              cursor: "pointer",
-              color: "#6C727E",
+              position: 'absolute',
+              top: '16px',
+              right: '16px',
+              background: 'none',
+              border: 'none',
+              fontSize: '20px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              color: '#6C727E',
             }}
           >
             &times;
@@ -777,28 +818,28 @@ export default function Dashboard() {
           <Typography
             variant="subtitle2"
             sx={{
-              color: "#6C727E",
-              marginTop: "8px",
+              color: '#6C727E',
+              marginTop: '8px',
             }}
           >
             This action can not be undone.
           </Typography>
           <div
             style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: "16px",
-              gap: "12px",
+              display: 'flex',
+              justifyContent: 'flex-end',
+              marginTop: '16px',
+              gap: '12px',
             }}
           >
             <button
               style={{
-                padding: "8px 16px",
-                background: "#FB4E2B",
-                color: "#ffffff",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
+                padding: '8px 16px',
+                background: '#FB4E2B',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
               }}
               onClick={handleDeleteAccount}
             >
@@ -811,13 +852,13 @@ export default function Dashboard() {
       <Modal open={isSignModalOpen} onClose={handleModalClose}>
         <Box
           sx={{
-            outline: "none",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
+            outline: 'none',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
             width: 400,
-            bgcolor: "var(--Greyscale-20, #f5f7fb)",
+            bgcolor: 'var(--Greyscale-20, #f5f7fb)',
             boxShadow: 24,
             p: 4,
             borderRadius: 2,
@@ -826,15 +867,15 @@ export default function Dashboard() {
           <div
             onClick={handleModalClose}
             style={{
-              position: "absolute",
-              top: "16px",
-              right: "16px",
-              background: "none",
-              border: "none",
-              fontSize: "20px",
-              fontWeight: "bold",
-              cursor: "pointer",
-              color: "#6C727E",
+              position: 'absolute',
+              top: '16px',
+              right: '16px',
+              background: 'none',
+              border: 'none',
+              fontSize: '20px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              color: '#6C727E',
             }}
           >
             &times;
@@ -845,13 +886,13 @@ export default function Dashboard() {
           <Typography
             variant="subtitle2"
             sx={{
-              color: "#6C727E",
+              color: '#6C727E',
             }}
           >
             This helps prove you signed a message using your address.
           </Typography>
           <TextField
-            disabled={messageSigningResult?.startsWith("Verif")}
+            disabled={messageSigningResult?.startsWith('Verif')}
             fullWidth
             margin="normal"
             value={signature ? JSON.stringify(signature) : messageToSign}
@@ -863,24 +904,24 @@ export default function Dashboard() {
                 : setMessageToSign(e.target.value)
             }
             sx={{
-              bgcolor: "#ffffff",
-              "& .MuiOutlinedInput-root": {
-                height: "auto",
-                alignItems: "flex-start",
-                "& fieldset": {
-                  borderColor: "#D0D5DD",
+              bgcolor: '#ffffff',
+              '& .MuiOutlinedInput-root': {
+                height: 'auto',
+                alignItems: 'flex-start',
+                '& fieldset': {
+                  borderColor: '#D0D5DD',
                 },
-                "&:hover fieldset": {
-                  borderColor: "#8A929E",
+                '&:hover fieldset': {
+                  borderColor: '#8A929E',
                 },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#D0D5DD",
-                  border: "1px solid",
+                '&.Mui-focused fieldset': {
+                  borderColor: '#D0D5DD',
+                  border: '1px solid',
                 },
               },
-              "& .MuiInputBase-input": {
-                whiteSpace: "pre-wrap",
-                wordWrap: "break-word",
+              '& .MuiInputBase-input': {
+                whiteSpace: 'pre-wrap',
+                wordWrap: 'break-word',
               },
             }}
           />
@@ -888,20 +929,20 @@ export default function Dashboard() {
             <Typography
               sx={{
                 color:
-                  messageSigningResult.startsWith("Verified") ||
-                  messageSigningResult.startsWith("Success")
-                    ? "green"
-                    : "red",
+                  messageSigningResult.startsWith('Verified') ||
+                  messageSigningResult.startsWith('Success')
+                    ? 'green'
+                    : 'red',
               }}
             >
               {messageSigningResult}
             </Typography>
           )}
           {signature ? (
-            messageSigningResult?.startsWith("Verif") ? (
+            messageSigningResult?.startsWith('Verif') ? (
               <button
                 style={{
-                  marginTop: "12px",
+                  marginTop: '12px',
                 }}
                 onClick={handleModalClose}
               >
@@ -910,7 +951,7 @@ export default function Dashboard() {
             ) : (
               <button
                 style={{
-                  marginTop: "12px",
+                  marginTop: '12px',
                 }}
                 onClick={handleVerify}
               >
@@ -921,7 +962,7 @@ export default function Dashboard() {
             <button
               onClick={handleSign}
               style={{
-                marginTop: "12px",
+                marginTop: '12px',
               }}
             >
               Sign
@@ -936,13 +977,13 @@ export default function Dashboard() {
         >
           <Box
             sx={{
-              outline: "none",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
+              outline: 'none',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
               width: 400,
-              bgcolor: "var(--Greyscale-20, #f5f7fb)",
+              bgcolor: 'var(--Greyscale-20, #f5f7fb)',
               boxShadow: 24,
               p: 4,
               borderRadius: 2,
@@ -951,15 +992,15 @@ export default function Dashboard() {
             <div
               onClick={() => setIsEmailModalOpen(false)}
               style={{
-                position: "absolute",
-                top: "16px",
-                right: "16px",
-                background: "none",
-                border: "none",
-                fontSize: "20px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                color: "#6C727E",
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                background: 'none',
+                border: 'none',
+                fontSize: '20px',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                color: '#6C727E',
               }}
             >
               &times;
@@ -976,22 +1017,22 @@ export default function Dashboard() {
               onChange={(e) => setEmailInput(e.target.value)}
               placeholder="Enter your email"
               sx={{
-                bgcolor: "#ffffff",
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#D0D5DD",
+                bgcolor: '#ffffff',
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: '#D0D5DD',
                   },
-                  "&:hover fieldset": {
-                    borderColor: "#8A929E",
+                  '&:hover fieldset': {
+                    borderColor: '#8A929E',
                   },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#D0D5DD",
-                    border: "1px solid",
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#D0D5DD',
+                    border: '1px solid',
                   },
                 },
-                "& .MuiInputBase-input": {
-                  whiteSpace: "pre-wrap",
-                  wordWrap: "break-word",
+                '& .MuiInputBase-input': {
+                  whiteSpace: 'pre-wrap',
+                  wordWrap: 'break-word',
                 },
               }}
             />
@@ -1009,13 +1050,13 @@ export default function Dashboard() {
         >
           <Box
             sx={{
-              outline: "none",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
+              outline: 'none',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
               width: 400,
-              bgcolor: "var(--Greyscale-20, #f5f7fb)",
+              bgcolor: 'var(--Greyscale-20, #f5f7fb)',
               boxShadow: 24,
               p: 4,
               borderRadius: 2,
@@ -1024,15 +1065,15 @@ export default function Dashboard() {
             <div
               onClick={() => setIsPhoneModalOpen(false)}
               style={{
-                position: "absolute",
-                top: "16px",
-                right: "16px",
-                background: "none",
-                border: "none",
-                fontSize: "20px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                color: "#6C727E",
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                background: 'none',
+                border: 'none',
+                fontSize: '20px',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                color: '#6C727E',
               }}
             >
               &times;
@@ -1058,13 +1099,13 @@ export default function Dashboard() {
         <Modal open={isOtpModalOpen} onClose={() => setIsOtpModalOpen(false)}>
           <Box
             sx={{
-              outline: "none",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
+              outline: 'none',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
               width: 400,
-              bgcolor: "var(--Greyscale-20, #f5f7fb)",
+              bgcolor: 'var(--Greyscale-20, #f5f7fb)',
               boxShadow: 24,
               p: 4,
               borderRadius: 2,
@@ -1073,15 +1114,15 @@ export default function Dashboard() {
             <div
               onClick={() => setIsOtpModalOpen(false)}
               style={{
-                position: "absolute",
-                top: "16px",
-                right: "16px",
-                background: "none",
-                border: "none",
-                fontSize: "20px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                color: "#6C727E",
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                background: 'none',
+                border: 'none',
+                fontSize: '20px',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                color: '#6C727E',
               }}
             >
               &times;
@@ -1106,13 +1147,13 @@ export default function Dashboard() {
         >
           <Box
             sx={{
-              outline: "none",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
+              outline: 'none',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
               width: 400,
-              bgcolor: "var(--Greyscale-20, #f5f7fb)",
+              bgcolor: 'var(--Greyscale-20, #f5f7fb)',
               boxShadow: 24,
               p: 4,
               borderRadius: 2,
@@ -1121,15 +1162,15 @@ export default function Dashboard() {
             <div
               onClick={() => setIsPasskeyModalOpen(false)}
               style={{
-                position: "absolute",
-                top: "16px",
-                right: "16px",
-                background: "none",
-                border: "none",
-                fontSize: "20px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                color: "#6C727E",
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                background: 'none',
+                border: 'none',
+                fontSize: '20px',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                color: '#6C727E',
               }}
             >
               &times;
@@ -1157,7 +1198,7 @@ export default function Dashboard() {
       <div>
         <Toaster
           position="bottom-right"
-          toastOptions={{ className: "sonner-toaster", duration: 2500 }}
+          toastOptions={{ className: 'sonner-toaster', duration: 2500 }}
         />
       </div>
     </main>
