@@ -3,7 +3,7 @@ body {
   padding: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url("../../../public/grid.svg");
+  background-image: url('../../../public/grid.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -292,7 +292,7 @@ button:hover {
   width: 32px;
   height: 32px;
   display: inline-block;
-  background-image: url("/eth.svg");
+  background-image: url('/eth.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -301,13 +301,13 @@ button:hover {
 }
 
 .eth-icon::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/eth-hover.svg");
+  background-image: url('/eth-hover.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -324,7 +324,7 @@ button:hover {
   width: 32px;
   height: 32px;
   display: inline-block;
-  background-image: url("/solana.svg");
+  background-image: url('/solana.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -333,13 +333,13 @@ button:hover {
 }
 
 .sol-icon::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/solana-hover.svg");
+  background-image: url('/solana-hover.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -407,17 +407,17 @@ button:hover {
 }
 
 .eth-icon {
-  background-image: url("/eth.svg");
+  background-image: url('/eth.svg');
 }
 
 .eth-icon::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/eth-hover.svg");
+  background-image: url('/eth-hover.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -426,17 +426,17 @@ button:hover {
 }
 
 .sol-icon {
-  background-image: url("/solana.svg");
+  background-image: url('/solana.svg');
 }
 
 .sol-icon::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/solana-hover.svg");
+  background-image: url('/solana-hover.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

@@ -1,11 +1,11 @@
-'use client';
+'use client'
 
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { Auth, useTurnkey } from '@turnkey/sdk-react';
-import { Typography } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CustomSwitch from './components/Switch';
+import * as React from 'react'
+import { useEffect, useState } from 'react'
+import { Auth, useTurnkey } from '@turnkey/sdk-react'
+import { Typography } from '@mui/material'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import CustomSwitch from './components/Switch'
 import {
   DragDropContext,
   Droppable,
@@ -13,47 +13,47 @@ import {
   DropResult,
   DroppableProvided,
   DraggableProvided,
-} from '@hello-pangea/dnd';
-import './index.css';
-import { useRouter } from 'next/navigation';
-import Navbar from './components/Navbar';
-import { Toaster, toast } from 'sonner';
+} from '@hello-pangea/dnd'
+import './index.css'
+import { useRouter } from 'next/navigation'
+import Navbar from './components/Navbar'
+import { Toaster, toast } from 'sonner'
 
 // Define reusable types for provided props
-type DroppableProvidedProps = DroppableProvided;
-type DraggableProvidedProps = DraggableProvided;
+type DroppableProvidedProps = DroppableProvided
+type DraggableProvidedProps = DraggableProvided
 
 // Define types for config and socials
 interface SocialConfig {
-  enabled: boolean;
+  enabled: boolean
   providers: {
-    google: boolean;
-    apple: boolean;
-    facebook: boolean;
-  };
+    google: boolean
+    apple: boolean
+    facebook: boolean
+  }
 }
 
 interface Config {
-  email: boolean;
-  passkey: boolean;
-  phone: boolean;
-  wallet: boolean;
-  socials: SocialConfig;
+  email: boolean
+  passkey: boolean
+  phone: boolean
+  wallet: boolean
+  socials: SocialConfig
 }
 
 export default function AuthPage() {
-  const router = useRouter();
+  const router = useRouter()
   const handleAuthSuccess = async () => {
-    router.push('/dashboard');
-  };
-  const { turnkey } = useTurnkey();
+    router.push('/dashboard')
+  }
+  const { turnkey } = useTurnkey()
   const [configOrder, setConfigOrder] = useState([
     'socials',
     'email',
     'phone',
     'passkey',
     'wallet',
-  ]);
+  ])
 
   const [config, setConfig] = useState<Config>({
     email: true,
@@ -68,36 +68,36 @@ export default function AuthPage() {
         facebook: false,
       },
     },
-  });
+  })
 
   useEffect(() => {
     const manageSession = async () => {
       if (turnkey) {
-        const session = await turnkey?.getReadWriteSession();
+        const session = await turnkey?.getReadWriteSession()
         if (session && Date.now() < session.expiry) {
-          await handleAuthSuccess();
+          await handleAuthSuccess()
         }
       }
-    };
-    manageSession();
-  }, [turnkey]);
+    }
+    manageSession()
+  }, [turnkey])
 
   const toggleConfig = (key: keyof Config) => {
-    setConfig((prev) => {
-      const newConfig = { ...prev };
+    setConfig(prev => {
+      const newConfig = { ...prev }
       if (key !== 'socials') {
-        newConfig[key] = !prev[key];
+        newConfig[key] = !prev[key]
       }
-      return newConfig;
-    });
-  };
+      return newConfig
+    })
+  }
 
   const toggleSocials = (
     key: keyof SocialConfig | keyof SocialConfig['providers']
   ) => {
-    setConfig((prev) => {
+    setConfig(prev => {
       if (key === 'enabled') {
-        const isEnabled = !prev.socials.enabled;
+        const isEnabled = !prev.socials.enabled
         return {
           ...prev,
           socials: {
@@ -108,7 +108,7 @@ export default function AuthPage() {
               facebook: isEnabled,
             },
           },
-        };
+        }
       }
 
       if (prev.socials.enabled && key in prev.socials.providers) {
@@ -122,12 +122,12 @@ export default function AuthPage() {
                 !prev.socials.providers[key as keyof SocialConfig['providers']],
             },
           },
-        };
+        }
       }
 
-      return prev;
-    });
-  };
+      return prev
+    })
+  }
 
   const handleCopyConfig = () => {
     const authConfig = {
@@ -138,15 +138,15 @@ export default function AuthPage() {
       appleEnabled: config.socials.providers.apple,
       googleEnabled: config.socials.providers.google,
       facebookEnabled: config.socials.providers.facebook,
-    };
+    }
 
     const configToCopy = {
       authConfig,
       configOrder,
-    };
-    navigator.clipboard.writeText(JSON.stringify(configToCopy, null, 2));
-    toast.success('Copied to clipboard!');
-  };
+    }
+    navigator.clipboard.writeText(JSON.stringify(configToCopy, null, 2))
+    toast.success('Copied to clipboard!')
+  }
 
   const authConfig = {
     emailEnabled: config.email,
@@ -156,18 +156,18 @@ export default function AuthPage() {
     appleEnabled: config.socials.providers.apple,
     googleEnabled: config.socials.providers.google,
     facebookEnabled: config.socials.providers.facebook,
-  };
+  }
 
   const onDragEnd = (result: DropResult) => {
-    const { destination, source } = result;
-    if (!destination) return;
+    const { destination, source } = result
+    if (!destination) return
 
-    const reorderedConfig = Array.from(configOrder);
-    const [movedItem] = reorderedConfig.splice(source.index, 1);
-    reorderedConfig.splice(destination.index, 0, movedItem);
+    const reorderedConfig = Array.from(configOrder)
+    const [movedItem] = reorderedConfig.splice(source.index, 1)
+    reorderedConfig.splice(destination.index, 0, movedItem)
 
-    setConfigOrder(reorderedConfig);
-  };
+    setConfigOrder(reorderedConfig)
+  }
 
   return (
     <main className="main">
@@ -220,8 +220,8 @@ export default function AuthPage() {
                                     provider === 'google'
                                       ? '8px 8px 0 0'
                                       : provider === 'facebook'
-                                      ? '0 0 8px 8px'
-                                      : undefined,
+                                        ? '0 0 8px 8px'
+                                        : undefined,
                                 }}
                               >
                                 <div className="labelContainer">
@@ -311,5 +311,5 @@ export default function AuthPage() {
         />
       </div>
     </main>
-  );
+  )
 }

@@ -3,7 +3,7 @@ body {
   padding: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url("../../public/grid.svg");
+  background-image: url('../../public/grid.svg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -130,7 +130,7 @@ body {
 }
 
 .sonner-toaster {
-  font-family: "Inter";
+  font-family: 'Inter';
   font-size: 14px;
   z-index: 9999;
   pointer-events: none;

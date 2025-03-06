@@ -1,8 +1,8 @@
-import { PublicKey, PublicKeyInitData } from "@solana/web3.js";
-import nacl from "tweetnacl";
-import { Buffer } from "buffer";
+import { PublicKey, PublicKeyInitData } from '@solana/web3.js'
+import nacl from 'tweetnacl'
+import { Buffer } from 'buffer'
 
-import { hashMessage, keccak256, recoverAddress, toUtf8Bytes } from "ethers";
+import { hashMessage, keccak256, recoverAddress, toUtf8Bytes } from 'ethers'
 
 /**
  * Verifies an Ethereum signature and returns the address it was signed with.
@@ -22,14 +22,14 @@ export function verifyEthSignatureWithAddress(
 ): boolean {
   try {
     // Construct the full signature
-    const signature = `0x${r}${s}${v === "00" ? "1b" : "1c"}`; // 1b/1c corresponds to v for Ethereum
-    const hashedMessage = keccak256(toUtf8Bytes(message));
+    const signature = `0x${r}${s}${v === '00' ? '1b' : '1c'}` // 1b/1c corresponds to v for Ethereum
+    const hashedMessage = keccak256(toUtf8Bytes(message))
 
     // Recover the address from the signature
-    return address == recoverAddress(hashedMessage, signature);
+    return address == recoverAddress(hashedMessage, signature)
   } catch (error) {
-    console.error("Ethereum signature verification failed:", error);
-    return false;
+    console.error('Ethereum signature verification failed:', error)
+    return false
   }
 }
 
@@ -49,22 +49,18 @@ export function verifySolSignatureWithAddress(
 ) {
   try {
     // Combine r and s as the full signature (64 bytes for Solana)
-    const signature = Buffer.from(r + s, "hex");
+    const signature = Buffer.from(r + s, 'hex')
 
     // Convert the message to a buffer
-    const messageBuffer = Buffer.from(message);
+    const messageBuffer = Buffer.from(message)
 
     // Treat the address as the public key (if valid)
-    const pubKey = new PublicKey(address);
+    const pubKey = new PublicKey(address)
 
     // Verify the signature
-    return nacl.sign.detached.verify(
-      messageBuffer,
-      signature,
-      pubKey.toBytes()
-    );
+    return nacl.sign.detached.verify(messageBuffer, signature, pubKey.toBytes())
   } catch (error) {
-    console.error("Solana signature verification failed:", error);
-    return false;
+    console.error('Solana signature verification failed:', error)
+    return false
   }
 }

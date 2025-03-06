@@ -1,19 +1,19 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
-import { Toaster, toast } from 'sonner';
-import { keccak256, toUtf8Bytes } from 'ethers';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react'
+import { Toaster, toast } from 'sonner'
+import { keccak256, toUtf8Bytes } from 'ethers'
+import { useRouter } from 'next/navigation'
 import {
   Export,
   Import,
   useTurnkey,
   OtpVerification,
   OtpType,
-} from '@turnkey/sdk-react';
-import { server } from '@turnkey/sdk-server';
+} from '@turnkey/sdk-react'
+import { server } from '@turnkey/sdk-server'
 
-import './dashboard.css';
+import './dashboard.css'
 import {
   Typography,
   Radio,
@@ -25,92 +25,92 @@ import {
   MenuItem,
   Menu,
   CircularProgress,
-} from '@mui/material';
+} from '@mui/material'
 
-import WalletIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
-import MailIcon from '@mui/icons-material/MarkEmailReadOutlined';
-import PhoneIcon from '@mui/icons-material/PhoneAndroidOutlined';
-import LogoutIcon from '@mui/icons-material/LogoutOutlined';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import LaunchIcon from '@mui/icons-material/Launch';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import WalletIcon from '@mui/icons-material/AccountBalanceWalletOutlined'
+import MailIcon from '@mui/icons-material/MarkEmailReadOutlined'
+import PhoneIcon from '@mui/icons-material/PhoneAndroidOutlined'
+import LogoutIcon from '@mui/icons-material/LogoutOutlined'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import LaunchIcon from '@mui/icons-material/Launch'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 
 import {
   verifyEthSignatureWithAddress,
   verifySolSignatureWithAddress,
-} from '../utils';
+} from '../utils'
 
 import {
   appleOidcToken,
   facebookOidcToken,
   googleOidcToken,
-} from '../utils/oidc';
-import { MuiPhone } from '../components/PhoneInput';
+} from '../utils/oidc'
+import { MuiPhone } from '../components/PhoneInput'
 
-import Navbar from '../components/Navbar';
-import { TurnkeyApiTypes } from '@turnkey/sdk-browser';
+import Navbar from '../components/Navbar'
+import { TurnkeyApiTypes } from '@turnkey/sdk-browser'
 
 interface Signature {
-  r: string;
-  s: string;
-  v: string;
+  r: string
+  s: string
+  v: string
 }
 
 export default function Dashboard() {
-  const router = useRouter();
-  const { turnkey, authIframeClient, passkeyClient } = useTurnkey();
-  const [loading, setLoading] = useState(true);
+  const router = useRouter()
+  const { turnkey, authIframeClient, passkeyClient } = useTurnkey()
+  const [loading, setLoading] = useState(true)
   const [accounts, setAccounts] = useState<
     TurnkeyApiTypes['v1WalletAccount'][]
-  >([]);
-  const [wallets, setWallets] = useState<TurnkeyApiTypes['v1Wallet'][]>([]);
-  const [selectedAccount, setSelectedAccount] = useState<string | null>(null);
-  const [selectedWallet, setSelectedWallet] = useState<string | null>(null);
-  const [isSignModalOpen, setIsSignModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isPasskeyModalOpen, setIsPasskeyModalOpen] = useState(false);
+  >([])
+  const [wallets, setWallets] = useState<TurnkeyApiTypes['v1Wallet'][]>([])
+  const [selectedAccount, setSelectedAccount] = useState<string | null>(null)
+  const [selectedWallet, setSelectedWallet] = useState<string | null>(null)
+  const [isSignModalOpen, setIsSignModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isPasskeyModalOpen, setIsPasskeyModalOpen] = useState(false)
   const [messageToSign, setMessageToSign] = useState(
     'Signing within Turnkey Demo.'
-  );
-  const [signature, setSignature] = useState<Signature | null>(null);
-  const [suborgId, setSuborgId] = useState<string>('');
-  const [isVerifiedEmail, setIsVerifiedEmail] = useState<boolean>(false);
-  const [isVerifiedPhone, setIsVerifiedPhone] = useState<boolean>(false);
-  const [user, setUser] = useState<TurnkeyApiTypes['v1User'] | null>(null);
-  const [otpId, setOtpId] = useState('');
+  )
+  const [signature, setSignature] = useState<Signature | null>(null)
+  const [suborgId, setSuborgId] = useState<string>('')
+  const [isVerifiedEmail, setIsVerifiedEmail] = useState<boolean>(false)
+  const [isVerifiedPhone, setIsVerifiedPhone] = useState<boolean>(false)
+  const [user, setUser] = useState<TurnkeyApiTypes['v1User'] | null>(null)
+  const [otpId, setOtpId] = useState('')
   const [messageSigningResult, setMessageSigningResult] = useState<
     string | null
-  >(null);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  >(null)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
-  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
-  const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
-  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
-  const [emailInput, setEmailInput] = useState('');
-  const [phoneInput, setPhoneInput] = useState('');
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false)
+  const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false)
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false)
+  const [emailInput, setEmailInput] = useState('')
+  const [phoneInput, setPhoneInput] = useState('')
 
   const handleExportSuccess = async () => {
-    toast.success('Wallet successfully exported');
-  };
+    toast.success('Wallet successfully exported')
+  }
   const handleImportSuccess = async () => {
-    await getWallets();
-    toast.success('Wallet successfully imported');
-  };
+    await getWallets()
+    toast.success('Wallet successfully imported')
+  }
   const handleResendEmail = async () => {
     const initAuthResponse = await server.sendOtp({
       suborgID: suborgId,
       otpType: OtpType.Email,
       contact: emailInput,
       userIdentifier: authIframeClient?.iframePublicKey!,
-    });
+    })
     if (!initAuthResponse || !initAuthResponse.otpId!) {
-      toast.error('Failed to send OTP');
-      return;
+      toast.error('Failed to send OTP')
+      return
     }
-    setOtpId(initAuthResponse?.otpId!);
-  };
+    setOtpId(initAuthResponse?.otpId!)
+  }
   const handleResendSms = async () => {
     const initAuthResponse = await server.sendOtp({
       suborgID: suborgId,
@@ -118,94 +118,94 @@ export default function Dashboard() {
       contact: phoneInput,
       customSmsMessage: 'Your Turnkey Demo OTP is {{.OtpCode}}',
       userIdentifier: authIframeClient?.iframePublicKey!,
-    });
+    })
     if (!initAuthResponse || !initAuthResponse.otpId!) {
-      toast.error('Failed to send OTP');
-      return;
+      toast.error('Failed to send OTP')
+      return
     }
-    setOtpId(initAuthResponse?.otpId!);
-  };
+    setOtpId(initAuthResponse?.otpId!)
+  }
 
   const handleOtpSuccess = async (credentialBundle: any) => {
-    window.location.reload();
-  };
+    window.location.reload()
+  }
   const handleOpenEmailModal = () => {
-    setIsEmailModalOpen(true);
-  };
+    setIsEmailModalOpen(true)
+  }
   const handleOpenPhoneModal = () => {
-    setIsPhoneModalOpen(true);
-  };
+    setIsPhoneModalOpen(true)
+  }
   const handleEmailSubmit = async () => {
     if (!emailInput) {
-      toast.error('Please enter a valid email address');
-      return;
+      toast.error('Please enter a valid email address')
+      return
     }
     const suborgs = await server.getVerifiedSuborgs({
       filterType: 'EMAIL',
       filterValue: emailInput,
-    });
+    })
     if (suborgs && suborgs!.organizationIds.length > 0) {
-      toast.error('Email is already connected to another account');
-      return;
+      toast.error('Email is already connected to another account')
+      return
     }
     await authIframeClient?.updateUser({
       organizationId: suborgId,
       userId: user?.userId || '',
       userEmail: emailInput,
       userTagIds: [],
-    });
+    })
     const initAuthResponse = await server.sendOtp({
       suborgID: suborgId,
       otpType: OtpType.Email,
       contact: emailInput,
       userIdentifier: authIframeClient?.iframePublicKey!,
-    });
+    })
     if (!initAuthResponse || !initAuthResponse.otpId!) {
-      toast.error('Failed to send OTP');
-      return;
+      toast.error('Failed to send OTP')
+      return
     }
-    setOtpId(initAuthResponse?.otpId!);
-    setIsEmailModalOpen(false);
-    setIsOtpModalOpen(true);
-  };
+    setOtpId(initAuthResponse?.otpId!)
+    setIsEmailModalOpen(false)
+    setIsOtpModalOpen(true)
+  }
 
   const handlePhoneSubmit = async () => {
     if (!phoneInput) {
-      toast.error('Please enter a valid phone number.');
-      return;
+      toast.error('Please enter a valid phone number.')
+      return
     }
     const suborgs = await server.getVerifiedSuborgs({
       filterType: 'PHONE_NUMBER',
       filterValue: phoneInput,
-    });
+    })
     if (suborgs && suborgs!.organizationIds.length > 0) {
-      toast.error('Phone Number is already connected to another account');
-      return;
+      toast.error('Phone Number is already connected to another account')
+      return
     }
     await authIframeClient?.updateUser({
       organizationId: suborgId,
       userId: user?.userId || '',
       userPhoneNumber: phoneInput,
       userTagIds: [],
-    });
+    })
     const initAuthResponse = await server.sendOtp({
       suborgID: suborgId,
       otpType: OtpType.Sms,
       contact: phoneInput,
       customSmsMessage: 'Your Turnkey Demo OTP is {{.OtpCode}}',
       userIdentifier: authIframeClient?.iframePublicKey!,
-    });
+    })
     if (!initAuthResponse || !initAuthResponse.otpId!) {
-      toast.error('Failed to send OTP');
-      return;
+      toast.error('Failed to send OTP')
+      return
     }
-    setOtpId(initAuthResponse?.otpId!);
-    setIsEmailModalOpen(false);
-    setIsOtpModalOpen(true);
-  };
+    setOtpId(initAuthResponse?.otpId!)
+    setIsEmailModalOpen(false)
+    setIsOtpModalOpen(true)
+  }
 
   const handleAddOauth = async (oauthType: string) => {
-    let oidcToken;
+    let oidcToken
     switch (oauthType) {
       case 'Apple':
         oidcToken = await appleOidcToken({
@@ -213,8 +213,8 @@ export default function Dashboard() {
           clientId: process.env.NEXT_PUBLIC_APPLE_CLIENT_ID!,
           redirectURI: `${process.env
             .NEXT_PUBLIC_OAUTH_REDIRECT_URI!}dashboard`,
-        });
-        break;
+        })
+        break
 
       case 'Facebook':
         oidcToken = await facebookOidcToken({
@@ -222,8 +222,8 @@ export default function Dashboard() {
           clientId: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID!,
           redirectURI: `${process.env
             .NEXT_PUBLIC_OAUTH_REDIRECT_URI!}dashboard`,
-        });
-        break;
+        })
+        break
 
       case 'Google':
         oidcToken = await googleOidcToken({
@@ -231,20 +231,20 @@ export default function Dashboard() {
           clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
           redirectURI: `${process.env
             .NEXT_PUBLIC_OAUTH_REDIRECT_URI!}dashboard`,
-        });
-        break;
+        })
+        break
 
       default:
-        console.error(`Unknown OAuth type: ${oauthType}`);
+        console.error(`Unknown OAuth type: ${oauthType}`)
     }
     if (oidcToken) {
       const suborgs = await server.getSuborgs({
         filterType: 'OIDC_TOKEN',
         filterValue: oidcToken.idToken,
-      });
+      })
       if (suborgs!.organizationIds.length > 0) {
-        toast.error('Social login is already connected to another account');
-        return;
+        toast.error('Social login is already connected to another account')
+        return
       }
       await authIframeClient?.createOauthProviders({
         organizationId: suborgId,
@@ -255,10 +255,10 @@ export default function Dashboard() {
             oidcToken: oidcToken.idToken,
           },
         ],
-      });
-      window.location.reload();
+      })
+      window.location.reload()
     }
-  };
+  }
 
   const handleAddPasskey = async () => {
     const siteInfo = `${
@@ -270,11 +270,11 @@ export default function Dashboard() {
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
-    })}`;
+    })}`
     const { encodedChallenge, attestation } =
       (await passkeyClient?.createUserPasskey({
         publicKey: { user: { name: siteInfo, displayName: siteInfo } },
-      })) || {};
+      })) || {}
 
     if (encodedChallenge && attestation) {
       await authIframeClient?.createAuthenticators({
@@ -287,158 +287,158 @@ export default function Dashboard() {
             attestation,
           },
         ],
-      });
-      window.location.reload();
+      })
+      window.location.reload()
     }
-  };
+  }
 
   const handleDropdownClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleDropdownClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   const handleDeleteAccount: any = async () => {
     await authIframeClient?.deleteSubOrganization({
       organizationId: suborgId,
       deleteWithoutExport: true,
-    });
-    await handleLogout();
-  };
+    })
+    await handleLogout()
+  }
 
   const handleLogout: any = async () => {
-    turnkey?.logoutUser();
-    router.push('/');
-  };
+    turnkey?.logoutUser()
+    router.push('/')
+  }
   useEffect(() => {
     const manageSession = async () => {
       try {
         if (turnkey && authIframeClient) {
-          const session = await turnkey?.getReadWriteSession();
+          const session = await turnkey?.getReadWriteSession()
           if (!session || Date.now() > session!.expiry) {
-            await handleLogout();
+            await handleLogout()
           }
           await authIframeClient.injectCredentialBundle(
             session!.credentialBundle
-          );
-          const whoami = await authIframeClient?.getWhoami();
-          const suborgId = whoami?.organizationId;
-          setSuborgId(suborgId!);
+          )
+          const whoami = await authIframeClient?.getWhoami()
+          const suborgId = whoami?.organizationId
+          setSuborgId(suborgId!)
 
           const userResponse = await authIframeClient!.getUser({
             organizationId: suborgId!,
             userId: whoami?.userId!,
-          });
+          })
 
-          setUser(userResponse.user);
+          setUser(userResponse.user)
           const walletsResponse = await authIframeClient!.getWallets({
             organizationId: suborgId!,
-          });
-          setWallets(walletsResponse.wallets);
+          })
+          setWallets(walletsResponse.wallets)
           if (userResponse.user.userEmail) {
             const suborgs = await server.getVerifiedSuborgs({
               filterType: 'EMAIL',
               filterValue: userResponse.user.userEmail,
-            });
+            })
 
             if (
               suborgs &&
               suborgs!.organizationIds.length > 0 &&
               suborgs!.organizationIds[0] == suborgId
             ) {
-              setIsVerifiedEmail(true);
+              setIsVerifiedEmail(true)
             }
           }
           if (userResponse.user.userPhoneNumber) {
             const suborgs = await server.getVerifiedSuborgs({
               filterType: 'PHONE_NUMBER',
               filterValue: userResponse.user.userPhoneNumber,
-            });
+            })
             if (
               suborgs &&
               suborgs!.organizationIds.length > 0 &&
               suborgs!.organizationIds[0] == suborgId
             ) {
-              setIsVerifiedPhone(true);
+              setIsVerifiedPhone(true)
             }
           }
 
           // Default to the first wallet if available
           if (walletsResponse.wallets.length > 0) {
-            const defaultWalletId = walletsResponse.wallets[0].walletId;
-            setSelectedWallet(defaultWalletId);
+            const defaultWalletId = walletsResponse.wallets[0].walletId
+            setSelectedWallet(defaultWalletId)
 
             const accountsResponse = await authIframeClient!.getWalletAccounts({
               organizationId: suborgId!,
               walletId: defaultWalletId,
-            });
-            setAccounts(accountsResponse.accounts);
+            })
+            setAccounts(accountsResponse.accounts)
             if (accountsResponse.accounts.length > 0) {
-              setSelectedAccount(accountsResponse.accounts[0].address);
+              setSelectedAccount(accountsResponse.accounts[0].address)
             }
           }
         }
       } catch (error) {
-        console.error(error);
+        console.error(error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-    if (authIframeClient) {
-      manageSession();
     }
-  }, [authIframeClient, turnkey]);
+    if (authIframeClient) {
+      manageSession()
+    }
+  }, [authIframeClient, turnkey])
 
   const getWallets = async () => {
     const walletsResponse = await authIframeClient!.getWallets({
       organizationId: suborgId!,
-    });
-    setWallets(walletsResponse.wallets);
-  };
+    })
+    setWallets(walletsResponse.wallets)
+  }
   const handleAccountSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedAccount(event.target.value); // Save the full address (untruncated)
-  };
+    setSelectedAccount(event.target.value) // Save the full address (untruncated)
+  }
 
   const handleSignMessageClick = () => {
     if (!selectedAccount) {
-      toast.error('Please select an account first!');
-      return;
+      toast.error('Please select an account first!')
+      return
     }
-    setIsSignModalOpen(true);
-  };
+    setIsSignModalOpen(true)
+  }
 
   const handleModalClose = () => {
-    setIsSignModalOpen(false);
-    setSignature(null);
-    setMessageSigningResult(null);
-  };
+    setIsSignModalOpen(false)
+    setSignature(null)
+    setMessageSigningResult(null)
+  }
 
   const handleWalletSelect = async (walletId: string) => {
-    setSelectedWallet(walletId);
-    setAnchorEl(null);
+    setSelectedWallet(walletId)
+    setAnchorEl(null)
 
     // Fetch accounts for the selected wallet
     const accountsResponse = await authIframeClient!.getWalletAccounts({
       organizationId: suborgId!,
       walletId,
-    });
-    setAccounts(accountsResponse.accounts);
+    })
+    setAccounts(accountsResponse.accounts)
     if (accountsResponse.accounts.length > 0) {
-      setSelectedAccount(accountsResponse.accounts[0].address);
+      setSelectedAccount(accountsResponse.accounts[0].address)
     } else {
-      setSelectedAccount(null); // Clear selected account if no accounts found
+      setSelectedAccount(null) // Clear selected account if no accounts found
     }
-  };
+  }
 
   const handleSign = async () => {
     try {
-      const addressType = selectedAccount?.startsWith('0x') ? 'ETH' : 'SOL';
+      const addressType = selectedAccount?.startsWith('0x') ? 'ETH' : 'SOL'
       const hashedMessage =
         addressType === 'ETH'
           ? keccak256(toUtf8Bytes(messageToSign)) // Ethereum requires keccak256 hash
-          : Buffer.from(messageToSign, 'utf8').toString('hex'); // Solana doesn't require hashing
+          : Buffer.from(messageToSign, 'utf8').toString('hex') // Solana doesn't require hashing
 
       const resp = await authIframeClient?.signRawPayload({
         organizationId: suborgId!,
@@ -449,23 +449,23 @@ export default function Dashboard() {
           addressType === 'ETH'
             ? 'HASH_FUNCTION_NO_OP'
             : 'HASH_FUNCTION_NOT_APPLICABLE',
-      });
-      setMessageSigningResult('Success! Message signed.');
+      })
+      setMessageSigningResult('Success! Message signed.')
       if (resp?.r && resp?.s && resp?.v) {
         setSignature({
           r: resp.r,
           s: resp.s,
           v: resp.v,
-        });
+        })
       }
     } catch (error) {
-      console.error('Error signing message:', error);
+      console.error('Error signing message:', error)
     }
-  };
+  }
 
   const handleVerify = () => {
-    if (!signature) return;
-    const addressType = selectedAccount?.startsWith('0x') ? 'ETH' : 'SOL';
+    if (!signature) return
+    const addressType = selectedAccount?.startsWith('0x') ? 'ETH' : 'SOL'
     const verificationPassed =
       addressType === 'ETH'
         ? verifyEthSignatureWithAddress(
@@ -480,14 +480,14 @@ export default function Dashboard() {
             signature.r,
             signature.s,
             selectedAccount!
-          );
+          )
 
     setMessageSigningResult(
       verificationPassed
         ? 'Verified! The address used to sign the message matches your wallet address.'
         : 'Verification failed.'
-    );
-  };
+    )
+  }
   if (loading) {
     return (
       <main className="main">
@@ -500,7 +500,7 @@ export default function Dashboard() {
           />
         </div>
       </main>
-    );
+    )
   }
 
   return (
@@ -569,7 +569,7 @@ export default function Dashboard() {
             {user &&
             user.authenticators &&
             user.authenticators.some(
-              (auth) =>
+              auth =>
                 auth.credential?.type === 'CREDENTIAL_TYPE_API_KEY_SECP256K1' &&
                 auth.credential?.type === 'CREDENTIAL_TYPE_API_KEY_SECP256K1'
             ) ? (
@@ -660,7 +660,7 @@ export default function Dashboard() {
                 fontWeight: '600',
               }}
             >
-              {wallets.find((wallet) => wallet.walletId === selectedWallet)
+              {wallets.find(wallet => wallet.walletId === selectedWallet)
                 ?.walletName || 'Select Wallet'}
             </Typography>
             <ArrowDropDownIcon />
@@ -676,7 +676,7 @@ export default function Dashboard() {
               },
             }}
           >
-            {wallets.map((wallet) => (
+            {wallets.map(wallet => (
               <MenuItem
                 key={wallet.walletId}
                 onClick={() => handleWalletSelect(wallet.walletId)}
@@ -898,7 +898,7 @@ export default function Dashboard() {
             value={signature ? JSON.stringify(signature) : messageToSign}
             rows={5}
             multiline
-            onChange={(e) =>
+            onChange={e =>
               signature
                 ? setSignature(JSON.parse(e.target.value))
                 : setMessageToSign(e.target.value)
@@ -1014,7 +1014,7 @@ export default function Dashboard() {
               name="emailInput"
               margin="normal"
               value={emailInput}
-              onChange={(e) => setEmailInput(e.target.value)}
+              onChange={e => setEmailInput(e.target.value)}
               placeholder="Enter your email"
               sx={{
                 bgcolor: '#ffffff',
@@ -1086,7 +1086,7 @@ export default function Dashboard() {
               fullWidth
               margin="normal"
               value={phoneInput}
-              onChange={(e) => setPhoneInput(e)}
+              onChange={e => setPhoneInput(e)}
             />
             <button className="continue" onClick={handlePhoneSubmit}>
               Continue
@@ -1202,5 +1202,5 @@ export default function Dashboard() {
         />
       </div>
     </main>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import React from "react";
-import "./Navbar.css";
+import React from 'react'
+import './Navbar.css'
 
 const Navbar = () => {
   return (
@@ -30,7 +30,7 @@ const Navbar = () => {
         </svg>
       </a>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

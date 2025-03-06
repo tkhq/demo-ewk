@@ -1,14 +1,14 @@
-"use server";
+'use server'
 
-import crypto from "crypto";
+import crypto from 'crypto'
 
 export async function generateChallengePair() {
-  const verifier = crypto.randomBytes(32).toString("base64url");
+  const verifier = crypto.randomBytes(32).toString('base64url')
   const codeChallenge = crypto
-    .createHash("sha256")
+    .createHash('sha256')
     .update(verifier)
-    .digest("base64url");
-  return { verifier, codeChallenge };
+    .digest('base64url')
+  return { verifier, codeChallenge }
 }
 
 export async function exchangeCodeForToken(
@@ -20,8 +20,8 @@ export async function exchangeCodeForToken(
   const response = await fetch(
     `https://graph.facebook.com/v11.0/oauth/access_token`,
     {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         client_id: clientId,
         redirect_uri: redirectURI,
@@ -29,11 +29,11 @@ export async function exchangeCodeForToken(
         code_verifier: verifier,
       }),
     }
-  );
+  )
 
-  const tokenData = await response.json();
+  const tokenData = await response.json()
   if (!response.ok) {
-    throw new Error("Token exchange failed: " + JSON.stringify(tokenData));
+    throw new Error('Token exchange failed: ' + JSON.stringify(tokenData))
   }
-  return tokenData;
+  return tokenData
 }

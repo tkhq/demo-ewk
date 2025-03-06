@@ -1,4 +1,4 @@
-import "react-international-phone/style.css";
+import 'react-international-phone/style.css'
 import {
   BaseTextFieldProps,
   InputAdornment,
@@ -6,26 +6,26 @@ import {
   Select,
   TextField,
   Typography,
-} from "@mui/material";
+} from '@mui/material'
 import {
   CountryIso2,
   defaultCountries,
   parseCountry,
   usePhoneInput,
-} from "react-international-phone";
-import { FlagImage as OriginalFlagImage } from "react-international-phone";
+} from 'react-international-phone'
+import { FlagImage as OriginalFlagImage } from 'react-international-phone'
 
-const FlagImage = OriginalFlagImage as React.ElementType;
-const allowedCountries = ["us", "ca"];
+const FlagImage = OriginalFlagImage as React.ElementType
+const allowedCountries = ['us', 'ca']
 
-const countries = defaultCountries.filter((country) => {
-  const { iso2 } = parseCountry(country);
-  return allowedCountries.includes(iso2);
-});
+const countries = defaultCountries.filter(country => {
+  const { iso2 } = parseCountry(country)
+  return allowedCountries.includes(iso2)
+})
 
 export interface MUIPhoneProps extends BaseTextFieldProps {
-  value: string;
-  onChange: (phone: string) => void;
+  value: string
+  onChange: (phone: string) => void
 }
 
 export const MuiPhone: React.FC<MUIPhoneProps> = ({
@@ -35,14 +35,14 @@ export const MuiPhone: React.FC<MUIPhoneProps> = ({
 }) => {
   const { inputValue, handlePhoneValueChange, inputRef, country, setCountry } =
     usePhoneInput({
-      defaultCountry: "us",
+      defaultCountry: 'us',
       disableDialCodeAndPrefix: true,
       value,
       countries: countries,
-      onChange: (data) => {
-        onChange(data.phone);
+      onChange: data => {
+        onChange(data.phone)
       },
-    });
+    })
 
   return (
     <TextField
@@ -57,76 +57,76 @@ export const MuiPhone: React.FC<MUIPhoneProps> = ({
       inputRef={inputRef}
       fullWidth
       sx={{
-        "& .MuiOutlinedInput-root": {
-          "& fieldset": {
-            borderColor: "#D0D5DD",
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            borderColor: '#D0D5DD',
           },
-          "&:hover fieldset": {
-            borderColor: "#8A929E",
+          '&:hover fieldset': {
+            borderColor: '#8A929E',
           },
-          "&.Mui-focused fieldset": {
-            borderColor: "#D0D5DD",
-            border: "1px solid",
+          '&.Mui-focused fieldset': {
+            borderColor: '#D0D5DD',
+            border: '1px solid',
           },
         },
-        "& .MuiInputBase-input": {
-          padding: "10px 4px",
+        '& .MuiInputBase-input': {
+          padding: '10px 4px',
         },
-        backgroundColor: "white",
+        backgroundColor: 'white',
       }}
       InputProps={{
         startAdornment: (
           <InputAdornment
             position="start"
-            style={{ marginRight: "2px", marginLeft: "-8px" }}
+            style={{ marginRight: '2px', marginLeft: '-8px' }}
           >
             <Select
               MenuProps={{
                 style: {
-                  height: "300px",
-                  width: "360px",
-                  top: "10px",
-                  left: "-34px",
+                  height: '300px',
+                  width: '360px',
+                  top: '10px',
+                  left: '-34px',
                 },
                 transformOrigin: {
-                  vertical: "top",
-                  horizontal: "left",
+                  vertical: 'top',
+                  horizontal: 'left',
                 },
               }}
               sx={{
-                width: "max-content",
+                width: 'max-content',
                 fieldset: {
-                  display: "none",
+                  display: 'none',
                 },
                 "&.Mui-focused:has(div[aria-expanded='false'])": {
                   fieldset: {
-                    display: "block",
+                    display: 'block',
                   },
                 },
-                ".MuiSelect-select": {
-                  padding: "8px",
-                  paddingRight: "24px !important",
+                '.MuiSelect-select': {
+                  padding: '8px',
+                  paddingRight: '24px !important',
                 },
                 svg: {
                   right: 0,
                 },
               }}
               value={country.iso2}
-              onChange={(e) => setCountry(e.target.value as CountryIso2)}
-              renderValue={(value) => {
+              onChange={e => setCountry(e.target.value as CountryIso2)}
+              renderValue={value => {
                 const selectedCountry = countries.find(
-                  (c) => parseCountry(c).iso2 === value
-                );
+                  c => parseCountry(c).iso2 === value
+                )
                 const parsedCountry = selectedCountry
                   ? parseCountry(selectedCountry)
-                  : null;
+                  : null
                 return (
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
                     {parsedCountry && (
                       <>
                         <FlagImage
                           iso2={parsedCountry.iso2}
-                          style={{ marginRight: "8px" }}
+                          style={{ marginRight: '8px' }}
                         />
                         <Typography marginRight="8px">
                           +{parsedCountry.dialCode}
@@ -134,21 +134,21 @@ export const MuiPhone: React.FC<MUIPhoneProps> = ({
                       </>
                     )}
                   </div>
-                );
+                )
               }}
             >
-              {countries.map((c) => {
-                const country = parseCountry(c);
+              {countries.map(c => {
+                const country = parseCountry(c)
                 return (
                   <MenuItem key={country.iso2} value={country.iso2}>
                     <FlagImage
                       iso2={country.iso2}
-                      style={{ marginRight: "8px" }}
+                      style={{ marginRight: '8px' }}
                     />
                     <Typography marginRight="8px">{country.name}</Typography>
                     <Typography color="gray">+{country.dialCode}</Typography>
                   </MenuItem>
-                );
+                )
               })}
             </Select>
           </InputAdornment>
@@ -156,5 +156,5 @@ export const MuiPhone: React.FC<MUIPhoneProps> = ({
       }}
       {...restProps}
     />
-  );
-};
+  )
+}
