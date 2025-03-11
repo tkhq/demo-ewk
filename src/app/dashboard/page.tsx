@@ -8,7 +8,7 @@ import {
   OtpType,
 } from "@turnkey/sdk-react";
 
-
+import { server } from "@turnkey/sdk-server";
 import { useEffect, useState } from "react";
 import "./dashboard.css";
 import {
@@ -43,7 +43,6 @@ import { MuiPhone } from "../components/PhoneInput";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Navbar from "../components/Navbar";
 import { Toaster, toast } from "sonner";
-import { server} from "@turnkey/sdk-server";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -57,7 +56,7 @@ export default function Dashboard() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isPasskeyModalOpen, setIsPasskeyModalOpen] = useState(false);
   const [messageToSign, setMessageToSign] = useState(
-    "Signing within Turnkey Demo."
+    "Signing within Turnkey Demo.",
   );
   const [signature, setSignature] = useState<any>(null);
   const [suborgId, setSuborgId] = useState<string>("");
@@ -84,31 +83,31 @@ export default function Dashboard() {
     toast.success("Wallet successfully imported");
   };
   const handleResendEmail = async () => {
-    const initAuthResponse = await server.sendOtp({
+    const sendOtpResponse = await server.sendOtp({
       suborgID: suborgId,
       otpType: OtpType.Email,
       contact: emailInput,
       userIdentifier: authIframeClient?.iframePublicKey!,
     });
-    if (!initAuthResponse || !initAuthResponse.otpId!) {
+    if (!sendOtpResponse || !sendOtpResponse.otpId!) {
       toast.error("Failed to send OTP");
       return;
     }
-    setOtpId(initAuthResponse?.otpId!);
+    setOtpId(sendOtpResponse?.otpId!);
   };
   const handleResendSms = async () => {
-    const initAuthResponse = await server.sendOtp({
+    const sendOtpResponse = await server.sendOtp({
       suborgID: suborgId,
       otpType: OtpType.Sms,
       contact: phoneInput,
       customSmsMessage: "Your Turnkey Demo OTP is {{.OtpCode}}",
       userIdentifier: authIframeClient?.iframePublicKey!,
     });
-    if (!initAuthResponse || !initAuthResponse.otpId!) {
+    if (!sendOtpResponse || !sendOtpResponse.otpId!) {
       toast.error("Failed to send OTP");
       return;
     }
-    setOtpId(initAuthResponse?.otpId!);
+    setOtpId(sendOtpResponse?.otpId!);
   };
 
   const handleOtpSuccess = async (credentialBundle: any) => {
@@ -133,23 +132,23 @@ export default function Dashboard() {
       toast.error("Email is already connected to another account");
       return;
     }
-    await authIframeClient?.updateUser({
-      organizationId: suborgId,
+
+    await authIframeClient?.addUserAuth({
       userId: user.userId,
-      userEmail: emailInput,
-      userTagIds: [],
+      email: emailInput,
     });
-    const initAuthResponse = await server.sendOtp({
+
+    const sendOtpResponse = await server.sendOtp({
       suborgID: suborgId,
       otpType: OtpType.Email,
       contact: emailInput,
       userIdentifier: authIframeClient?.iframePublicKey!,
     });
-    if (!initAuthResponse || !initAuthResponse.otpId!) {
+    if (!sendOtpResponse || !sendOtpResponse.otpId!) {
       toast.error("Failed to send OTP");
       return;
     }
-    setOtpId(initAuthResponse?.otpId!);
+    setOtpId(sendOtpResponse?.otpId!);
     setIsEmailModalOpen(false);
     setIsOtpModalOpen(true);
   };
@@ -167,24 +166,24 @@ export default function Dashboard() {
       toast.error("Phone Number is already connected to another account");
       return;
     }
-    await authIframeClient?.updateUser({
-      organizationId: suborgId,
+
+    await authIframeClient?.addUserAuth({
       userId: user.userId,
-      userPhoneNumber: phoneInput,
-      userTagIds: [],
+      phoneNumber: phoneInput,
     });
-    const initAuthResponse = await server.sendOtp({
+
+    const sendOtpResponse = await server.sendOtp({
       suborgID: suborgId,
       otpType: OtpType.Sms,
       contact: phoneInput,
       customSmsMessage: "Your Turnkey Demo OTP is {{.OtpCode}}",
       userIdentifier: authIframeClient?.iframePublicKey!,
     });
-    if (!initAuthResponse || !initAuthResponse.otpId!) {
+    if (!sendOtpResponse || !sendOtpResponse.otpId!) {
       toast.error("Failed to send OTP");
       return;
     }
-    setOtpId(initAuthResponse?.otpId!);
+    setOtpId(sendOtpResponse?.otpId!);
     setIsEmailModalOpen(false);
     setIsOtpModalOpen(true);
   };
@@ -231,8 +230,8 @@ export default function Dashboard() {
         toast.error("Social login is already connected to another account");
         return;
       }
-      await authIframeClient?.createOauthProviders({
-        organizationId: suborgId,
+
+      await authIframeClient?.addUserAuth({
         userId: user.userId,
         oauthProviders: [
           {
@@ -262,8 +261,7 @@ export default function Dashboard() {
       })) || {};
 
     if (encodedChallenge && attestation) {
-      await authIframeClient?.createAuthenticators({
-        organizationId: suborgId,
+      await authIframeClient?.addUserAuth({
         userId: user.userId,
         authenticators: [
           {
@@ -273,6 +271,7 @@ export default function Dashboard() {
           },
         ],
       });
+
       window.location.reload();
     }
   };
@@ -306,7 +305,7 @@ export default function Dashboard() {
             await handleLogout();
           }
           await authIframeClient.injectCredentialBundle(
-            session!.credentialBundle
+            session!.credentialBundle,
           );
           const whoami = await authIframeClient?.getWhoami();
           const suborgId = whoami?.organizationId;
@@ -452,19 +451,19 @@ export default function Dashboard() {
             signature.r,
             signature.s,
             signature.v,
-            selectedAccount!
+            selectedAccount!,
           )
         : verifySolSignatureWithAddress(
             messageToSign,
             signature.r,
             signature.s,
-            selectedAccount!
+            selectedAccount!,
           );
 
     setMessageSigningResult(
       verificationPassed
         ? "Verified! The address used to sign the message matches your wallet address."
-        : "Verification failed."
+        : "Verification failed.",
     );
   };
   if (loading) {
@@ -548,13 +547,13 @@ export default function Dashboard() {
               {user &&
                 user.oauthProviders &&
                 user.oauthProviders.some((provider: { issuer: string }) =>
-                  provider.issuer.toLowerCase().includes("google")
+                  provider.issuer.toLowerCase().includes("google"),
                 ) && <span className="loginMethodDetails">{}</span>}
             </div>
             {user &&
             user.oauthProviders &&
             user.oauthProviders.some((provider: { issuer: string }) =>
-              provider.issuer.toLowerCase().includes("google")
+              provider.issuer.toLowerCase().includes("google"),
             ) ? (
               <CheckCircleIcon sx={{ color: "#4c48ff" }} />
             ) : (
@@ -571,7 +570,7 @@ export default function Dashboard() {
             {user &&
             user.oauthProviders &&
             user.oauthProviders.some((provider: { issuer: string }) =>
-              provider.issuer.toLowerCase().includes("apple")
+              provider.issuer.toLowerCase().includes("apple"),
             ) ? (
               <CheckCircleIcon sx={{ color: "#4c48ff" }} />
             ) : (
@@ -588,7 +587,7 @@ export default function Dashboard() {
             {user &&
             user.oauthProviders &&
             user.oauthProviders.some((provider: { issuer: string }) =>
-              provider.issuer.toLowerCase().includes("facebook")
+              provider.issuer.toLowerCase().includes("facebook"),
             ) ? (
               <CheckCircleIcon sx={{ color: "#4c48ff" }} />
             ) : (
@@ -664,7 +663,7 @@ export default function Dashboard() {
                         account.addressFormat === "ADDRESS_FORMAT_ETHEREUM"
                           ? `https://etherscan.io/address/${account.address}`
                           : `https://solscan.io/account/${account.address}`,
-                        "_blank"
+                        "_blank",
                       )
                     }
                     style={{
@@ -681,7 +680,7 @@ export default function Dashboard() {
                     )}
                     <span className="accountAddress">{`${account.address.slice(
                       0,
-                      5
+                      5,
                     )}...${account.address.slice(-5)}`}</span>
                     <LaunchIcon className="launchIcon" />
                   </div>
