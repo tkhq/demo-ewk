@@ -37,6 +37,7 @@ interface Config {
   email: boolean;
   passkey: boolean;
   phone: boolean;
+  wallet: boolean;
   socials: SocialConfig;
 }
 
@@ -51,12 +52,14 @@ export default function AuthPage() {
     "email",
     "phone",
     "passkey",
+    "wallet",
   ]);
 
   const [config, setConfig] = useState<Config>({
     email: true,
     phone: false,
     passkey: true,
+    wallet: false,
     socials: {
       enabled: true,
       providers: {
@@ -90,7 +93,7 @@ export default function AuthPage() {
   };
 
   const toggleSocials = (
-    key: keyof SocialConfig | keyof SocialConfig["providers"]
+    key: keyof SocialConfig | keyof SocialConfig["providers"],
   ) => {
     setConfig((prev) => {
       if (key === "enabled") {
@@ -131,6 +134,7 @@ export default function AuthPage() {
       emailEnabled: config.email,
       passkeyEnabled: config.passkey,
       phoneEnabled: config.phone,
+      walletEnabled: config.wallet,
       appleEnabled: config.socials.providers.apple,
       googleEnabled: config.socials.providers.google,
       facebookEnabled: config.socials.providers.facebook,
@@ -148,6 +152,7 @@ export default function AuthPage() {
     emailEnabled: config.email,
     passkeyEnabled: config.passkey,
     phoneEnabled: config.phone,
+    walletEnabled: config.wallet,
     appleEnabled: config.socials.providers.apple,
     googleEnabled: config.socials.providers.google,
     facebookEnabled: config.socials.providers.facebook,
@@ -215,8 +220,8 @@ export default function AuthPage() {
                                     provider === "google"
                                       ? "8px 8px 0 0"
                                       : provider === "facebook"
-                                      ? "0 0 8px 8px"
-                                      : undefined,
+                                        ? "0 0 8px 8px"
+                                        : undefined,
                                 }}
                               >
                                 <div className="labelContainer">
@@ -233,12 +238,12 @@ export default function AuthPage() {
                                   checked={enabled}
                                   onChange={() =>
                                     toggleSocials(
-                                      provider as keyof SocialConfig["providers"]
+                                      provider as keyof SocialConfig["providers"],
                                     )
                                   }
                                 />
                               </div>
-                            )
+                            ),
                           )}
                         </div>
                       )}
@@ -273,7 +278,7 @@ export default function AuthPage() {
                         </div>
                       )}
                     </Draggable>
-                  )
+                  ),
                 )}
                 {provided.placeholder}
               </div>
