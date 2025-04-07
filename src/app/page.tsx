@@ -73,9 +73,12 @@ export default function AuthPage() {
   useEffect(() => {
     const manageSession = async () => {
       if (turnkey) {
-        const session = await turnkey?.getReadWriteSession();
+        const session = await turnkey?.getSession();
         if (session && Date.now() < session.expiry) {
           await handleAuthSuccess();
+        }
+        else {
+          await turnkey?.logout();
         }
       }
     };
