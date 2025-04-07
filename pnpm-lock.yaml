@@ -30,14 +30,14 @@ importers:
         specifier: ^1.95.8
         version: 1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
       '@turnkey/sdk-browser':
-        specifier: 2.0.0
-        version: 2.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
+        specifier: ^4.0.0
+        version: 4.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@turnkey/sdk-react':
-        specifier: 4.0.0
-        version: 4.0.0(@types/react@18.3.0)(bufferutil@4.0.9)(encoding@0.1.13)(prop-types@15.8.1)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)
+        specifier: 4.2.1
+        version: 4.2.1(@types/react@18.3.0)(bufferutil@4.0.9)(encoding@0.1.13)(prop-types@15.8.1)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@turnkey/sdk-server':
-        specifier: 2.5.0
-        version: 2.5.0(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)
+        specifier: ^3.0.1
+        version: 3.0.1(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@types/node':
         specifier: 20.3.1
         version: 20.3.1
@@ -485,8 +485,8 @@ packages:
   '@next/env@14.2.24':
     resolution: {integrity: sha512-LAm0Is2KHTNT6IT16lxT+suD0u+VVfYNQqM+EJTKuFRRuY2z+zj01kueWXPCxbMBDt0B5vONYzabHGUNbZYAhA==}
 
-  '@next/env@15.1.7':
-    resolution: {integrity: sha512-d9jnRrkuOH7Mhi+LHav2XW91HOgTAWHxjMPkXMGBc9B2b7614P7kjt8tAplRvJpbSt4nbO1lugcT/kAaWzjlLQ==}
+  '@next/env@15.2.4':
+    resolution: {integrity: sha512-+SFtMgoiYP3WoSswuNmxJOCwi06TdWE733D+WPjpXIe4LXGULwEaofiiAy6kbS0+XjM5xF5n3lKuBwN2SnqD9g==}
 
   '@next/eslint-plugin-next@14.2.20':
     resolution: {integrity: sha512-T0JRi706KLbvR1Uc46t56VtawbhR/igdBagzOrA7G+vv4rvjwnlu/Y4/Iq6X9TDVj5UZjyot4lUdkNd3V2kLhw==}
@@ -497,8 +497,8 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
-  '@next/swc-darwin-arm64@15.1.7':
-    resolution: {integrity: sha512-hPFwzPJDpA8FGj7IKV3Yf1web3oz2YsR8du4amKw8d+jAOHfYHYFpMkoF6vgSY4W6vB29RtZEklK9ayinGiCmQ==}
+  '@next/swc-darwin-arm64@15.2.4':
+    resolution: {integrity: sha512-1AnMfs655ipJEDC/FHkSr0r3lXBgpqKo4K1kiwfUf3iE68rDFXZ1TtHdMvf7D0hMItgDZ7Vuq3JgNMbt/+3bYw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -509,8 +509,8 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@next/swc-darwin-x64@15.1.7':
-    resolution: {integrity: sha512-2qoas+fO3OQKkU0PBUfwTiw/EYpN+kdAx62cePRyY1LqKtP09Vp5UcUntfZYajop5fDFTjSxCHfZVRxzi+9FYQ==}
+  '@next/swc-darwin-x64@15.2.4':
+    resolution: {integrity: sha512-3qK2zb5EwCwxnO2HeO+TRqCubeI/NgCe+kL5dTJlPldV/uwCnUgC7VbEzgmxbfrkbjehL4H9BPztWOEtsoMwew==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -521,8 +521,8 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-arm64-gnu@15.1.7':
-    resolution: {integrity: sha512-sKLLwDX709mPdzxMnRIXLIT9zaX2w0GUlkLYQnKGoXeWUhcvpCrK+yevcwCJPdTdxZEUA0mOXGLdPsGkudGdnA==}
+  '@next/swc-linux-arm64-gnu@15.2.4':
+    resolution: {integrity: sha512-HFN6GKUcrTWvem8AZN7tT95zPb0GUGv9v0d0iyuTb303vbXkkbHDp/DxufB04jNVD+IN9yHy7y/6Mqq0h0YVaQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -533,8 +533,8 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-arm64-musl@15.1.7':
-    resolution: {integrity: sha512-zblK1OQbQWdC8fxdX4fpsHDw+VSpBPGEUX4PhSE9hkaWPrWoeIJn+baX53vbsbDRaDKd7bBNcXRovY1hEhFd7w==}
+  '@next/swc-linux-arm64-musl@15.2.4':
+    resolution: {integrity: sha512-Oioa0SORWLwi35/kVB8aCk5Uq+5/ZIumMK1kJV+jSdazFm2NzPDztsefzdmzzpx5oGCJ6FkUC7vkaUseNTStNA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -545,8 +545,8 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@next/swc-linux-x64-gnu@15.1.7':
-    resolution: {integrity: sha512-GOzXutxuLvLHFDAPsMP2zDBMl1vfUHHpdNpFGhxu90jEzH6nNIgmtw/s1MDwpTOiM+MT5V8+I1hmVFeAUhkbgQ==}
+  '@next/swc-linux-x64-gnu@15.2.4':
+    resolution: {integrity: sha512-yb5WTRaHdkgOqFOZiu6rHV1fAEK0flVpaIN2HB6kxHVSy/dIajWbThS7qON3W9/SNOH2JWkVCyulgGYekMePuw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -557,8 +557,8 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@next/swc-linux-x64-musl@15.1.7':
-    resolution: {integrity: sha512-WrZ7jBhR7ATW1z5iEQ0ZJfE2twCNSXbpCSaAunF3BKcVeHFADSI/AW1y5Xt3DzTqPF1FzQlwQTewqetAABhZRQ==}
+  '@next/swc-linux-x64-musl@15.2.4':
+    resolution: {integrity: sha512-Dcdv/ix6srhkM25fgXiyOieFUkz+fOYkHlydWCtB0xMST6X9XYI3yPDKBZt1xuhOytONsIFJFB08xXYsxUwJLw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -569,8 +569,8 @@ packages:
     cpu: [arm64]
     os: [win32]
 
-  '@next/swc-win32-arm64-msvc@15.1.7':
-    resolution: {integrity: sha512-LDnj1f3OVbou1BqvvXVqouJZKcwq++mV2F+oFHptToZtScIEnhNRJAhJzqAtTE2dB31qDYL45xJwrc+bLeKM2Q==}
+  '@next/swc-win32-arm64-msvc@15.2.4':
+    resolution: {integrity: sha512-dW0i7eukvDxtIhCYkMrZNQfNicPDExt2jPb9AZPpL7cfyUo7QSNl1DjsHjmmKp6qNAqUESyT8YFl/Aw91cNJJg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
@@ -587,8 +587,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@next/swc-win32-x64-msvc@15.1.7':
-    resolution: {integrity: sha512-dC01f1quuf97viOfW05/K8XYv2iuBgAxJZl7mbCKEjMgdQl5JjAKJ0D2qMKZCgPWDeFbFT0Q0nYWwytEW0DWTQ==}
+  '@next/swc-win32-x64-msvc@15.2.4':
+    resolution: {integrity: sha512-SbnWkJmkS7Xl3kre8SdMF6F/XDh1DTFEhp0jRTj/uB8iPKoU2bb2NDfcu+iifv1+mxQEd1g2vvSxcZbXSKyWiQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -694,27 +694,27 @@ packages:
     resolution: {integrity: sha512-ptLgcpWVt34KTPx0omF2QLJrosW6I//clCJ4G2+yngYFCzrdR0yBchV/BOcfME67mK1v3MmauyXl9AAnQTmB4Q==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/http@2.21.0':
-    resolution: {integrity: sha512-HC7iJa6Y8jIJsnf02uNCLA5NHptrj5ITerxQ014Npft94KpMe1zIxgZtHlL9eF+BGvwr13d0FV4ew2KZ+6JJpg==}
+  '@turnkey/http@3.0.0':
+    resolution: {integrity: sha512-QFW9ZOPQy/a5DWL7GU9awb2dyQvRWwU5cSAmyYef/wBOdwy4Rm9k541eX2HDymzubXO0vkHHDw3enbUHIu9RmA==}
     engines: {node: '>=16.0.0'}
 
-  '@turnkey/iframe-stamper@2.3.0':
-    resolution: {integrity: sha512-l/8K9Q9vSDulH/bChHT2pn21mSx/6tiXPLIBPGKU9i8t5qFVGfSzr2EMOP8B+hTzjY0c30noXitNo1+ycM5b1g==}
+  '@turnkey/iframe-stamper@2.5.0':
+    resolution: {integrity: sha512-XjntbA5CNjxGRH+loceAlVLL9PG9Q4Y7p5zjBm4DeKclhD6lpUl9h8INArMEXIFbfLwLjjS6Q+SmQG4BHvNY6A==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/sdk-browser@2.0.0':
-    resolution: {integrity: sha512-cQ4yIuOc7xjWRS3JxoD+AiaRx4dIjs602ToEDegOK/s8A9R9xb55YD78QWIbO5DaQxOGtPOdWMyRCk0LzWEzWA==}
+  '@turnkey/sdk-browser@4.0.0':
+    resolution: {integrity: sha512-qO7vIDaaibbrgF4GgzU2WVedvMuwKYAR2vewBs2ZNdeuFFW6mlddP2IlgZ2dCwptZ3NC+6mSFyFgjJ0gX217Hg==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/sdk-react@4.0.0':
-    resolution: {integrity: sha512-qIcfCRRFUklnsNULfynTmO91072lhYLx0G9R4oBAqBZBpAn+RBst0zbJ2eLO7qgIMW043TvaPy0og8t4KucsVw==}
+  '@turnkey/sdk-react@4.2.1':
+    resolution: {integrity: sha512-5KsvH22w3vQvZUV3x0XqypthC7K3tHnQQTGVurvljy2jl4AUCxQqwcII87LOQO/g5sZMuTXreL3SAplcvCiqXQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@types/react': ^18.2.75
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
-  '@turnkey/sdk-server@2.5.0':
-    resolution: {integrity: sha512-tjAwRHNMNA8PGzpCZCr2O2dT0HyyC6Mcsj8qWV0HXlQ273LhRwLrFtyx+vyiZ6b0rNCDdM/GU5008OZyc+m50w==}
+  '@turnkey/sdk-server@3.0.1':
+    resolution: {integrity: sha512-mOu9ZkVMihNd3FYmn/kGsIYxnFihytKxOlqCysZi+32Ea0VtDmv8CbJMdNj2f2fnoBL20gOqc454KJVSg47phg==}
     engines: {node: '>=18.0.0'}
 
   '@turnkey/wallet-stamper@1.0.3':
@@ -1819,8 +1819,8 @@ packages:
       sass:
         optional: true
 
-  next@15.1.7:
-    resolution: {integrity: sha512-GNeINPGS9c6OZKCvKypbL8GTsT5GhWPp4DM0fzkXJuXMilOO2EeFxuAY6JZbtk6XIl6Ws10ag3xRINDjSO5+wg==}
+  next@15.2.4:
+    resolution: {integrity: sha512-VwL+LAaPSxEkd3lU2xWbgEOtrM8oedmyhBqaVNmgKB+GvZlCy9rgaEc+y2on0wv+l0oSFqLtYD6dcC1eAedUaQ==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
     hasBin: true
     peerDependencies:
@@ -2955,7 +2955,7 @@ snapshots:
 
   '@next/env@14.2.24': {}
 
-  '@next/env@15.1.7': {}
+  '@next/env@15.2.4': {}
 
   '@next/eslint-plugin-next@14.2.20':
     dependencies:
@@ -2964,43 +2964,43 @@ snapshots:
   '@next/swc-darwin-arm64@14.2.24':
     optional: true
 
-  '@next/swc-darwin-arm64@15.1.7':
+  '@next/swc-darwin-arm64@15.2.4':
     optional: true
 
   '@next/swc-darwin-x64@14.2.24':
     optional: true
 
-  '@next/swc-darwin-x64@15.1.7':
+  '@next/swc-darwin-x64@15.2.4':
     optional: true
 
   '@next/swc-linux-arm64-gnu@14.2.24':
     optional: true
 
-  '@next/swc-linux-arm64-gnu@15.1.7':
+  '@next/swc-linux-arm64-gnu@15.2.4':
     optional: true
 
   '@next/swc-linux-arm64-musl@14.2.24':
     optional: true
 
-  '@next/swc-linux-arm64-musl@15.1.7':
+  '@next/swc-linux-arm64-musl@15.2.4':
     optional: true
 
   '@next/swc-linux-x64-gnu@14.2.24':
     optional: true
 
-  '@next/swc-linux-x64-gnu@15.1.7':
+  '@next/swc-linux-x64-gnu@15.2.4':
     optional: true
 
   '@next/swc-linux-x64-musl@14.2.24':
     optional: true
 
-  '@next/swc-linux-x64-musl@15.1.7':
+  '@next/swc-linux-x64-musl@15.2.4':
     optional: true
 
   '@next/swc-win32-arm64-msvc@14.2.24':
     optional: true
 
-  '@next/swc-win32-arm64-msvc@15.1.7':
+  '@next/swc-win32-arm64-msvc@15.2.4':
     optional: true
 
   '@next/swc-win32-ia32-msvc@14.2.24':
@@ -3009,7 +3009,7 @@ snapshots:
   '@next/swc-win32-x64-msvc@14.2.24':
     optional: true
 
-  '@next/swc-win32-x64-msvc@15.1.7':
+  '@next/swc-win32-x64-msvc@15.2.4':
     optional: true
 
   '@noble/ciphers@0.5.3': {}
@@ -3132,7 +3132,7 @@ snapshots:
 
   '@turnkey/encoding@0.4.0': {}
 
-  '@turnkey/http@2.21.0(encoding@0.1.13)':
+  '@turnkey/http@3.0.0(encoding@0.1.13)':
     dependencies:
       '@turnkey/api-key-stamper': 0.4.4
       '@turnkey/encoding': 0.4.0
@@ -3141,15 +3141,15 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@turnkey/iframe-stamper@2.3.0': {}
+  '@turnkey/iframe-stamper@2.5.0': {}
 
-  '@turnkey/sdk-browser@2.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)':
+  '@turnkey/sdk-browser@4.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@turnkey/api-key-stamper': 0.4.4
       '@turnkey/crypto': 2.3.1
       '@turnkey/encoding': 0.4.0
-      '@turnkey/http': 2.21.0(encoding@0.1.13)
-      '@turnkey/iframe-stamper': 2.3.0
+      '@turnkey/http': 3.0.0(encoding@0.1.13)
+      '@turnkey/iframe-stamper': 2.5.0
       '@turnkey/wallet-stamper': 1.0.3(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@turnkey/webauthn-stamper': 0.5.0
       bs58check: 3.0.1
@@ -3163,7 +3163,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@turnkey/sdk-react@4.0.0(@types/react@18.3.0)(bufferutil@4.0.9)(encoding@0.1.13)(prop-types@15.8.1)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)':
+  '@turnkey/sdk-react@4.2.1(@types/react@18.3.0)(bufferutil@4.0.9)(encoding@0.1.13)(prop-types@15.8.1)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@emotion/react': 11.14.0(@types/react@18.3.0)(react@18.3.0)
       '@emotion/styled': 11.14.0(@emotion/react@11.14.0(@types/react@18.3.0)(react@18.3.0))(@types/react@18.3.0)(react@18.3.0)
@@ -3173,12 +3173,12 @@ snapshots:
       '@noble/hashes': 1.4.0
       '@react-oauth/google': 0.12.1(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
       '@turnkey/crypto': 2.3.1
-      '@turnkey/sdk-browser': 2.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
-      '@turnkey/sdk-server': 2.5.0(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)
+      '@turnkey/sdk-browser': 4.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
+      '@turnkey/sdk-server': 3.0.1(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@turnkey/wallet-stamper': 1.0.3(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@types/react': 18.3.0
       libphonenumber-js: 1.11.20
-      next: 15.1.7(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
+      next: 15.2.4(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
       react: 18.3.0
       react-apple-login: 1.1.6(prop-types@15.8.1)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
       react-international-phone: 4.5.0(react@18.3.0)
@@ -3200,14 +3200,14 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@turnkey/sdk-server@2.5.0(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)':
+  '@turnkey/sdk-server@3.0.1(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@turnkey/api-key-stamper': 0.4.4
-      '@turnkey/http': 2.21.0(encoding@0.1.13)
+      '@turnkey/http': 3.0.0(encoding@0.1.13)
       '@turnkey/wallet-stamper': 1.0.3(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
       buffer: 6.0.3
       cross-fetch: 3.2.0(encoding@0.1.13)
-      next: 15.1.7(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
+      next: 15.2.4(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
     transitivePeerDependencies:
       - '@babel/core'
       - '@opentelemetry/api'
@@ -4565,9 +4565,9 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  next@15.1.7(react-dom@18.3.0(react@18.3.0))(react@18.3.0):
+  next@15.2.4(react-dom@18.3.0(react@18.3.0))(react@18.3.0):
     dependencies:
-      '@next/env': 15.1.7
+      '@next/env': 15.2.4
       '@swc/counter': 0.1.3
       '@swc/helpers': 0.5.15
       busboy: 1.6.0
@@ -4577,14 +4577,14 @@ snapshots:
       react-dom: 18.3.0(react@18.3.0)
       styled-jsx: 5.1.6(react@18.3.0)
     optionalDependencies:
-      '@next/swc-darwin-arm64': 15.1.7
-      '@next/swc-darwin-x64': 15.1.7
-      '@next/swc-linux-arm64-gnu': 15.1.7
-      '@next/swc-linux-arm64-musl': 15.1.7
-      '@next/swc-linux-x64-gnu': 15.1.7
-      '@next/swc-linux-x64-musl': 15.1.7
-      '@next/swc-win32-arm64-msvc': 15.1.7
-      '@next/swc-win32-x64-msvc': 15.1.7
+      '@next/swc-darwin-arm64': 15.2.4
+      '@next/swc-darwin-x64': 15.2.4
+      '@next/swc-linux-arm64-gnu': 15.2.4
+      '@next/swc-linux-arm64-musl': 15.2.4
+      '@next/swc-linux-x64-gnu': 15.2.4
+      '@next/swc-linux-x64-musl': 15.2.4
+      '@next/swc-win32-arm64-msvc': 15.2.4
+      '@next/swc-win32-x64-msvc': 15.2.4
       sharp: 0.33.5
     transitivePeerDependencies:
       - '@babel/core'
