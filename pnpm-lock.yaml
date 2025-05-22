@@ -30,14 +30,14 @@ importers:
         specifier: ^1.95.8
         version: 1.98.0(bufferutil@4.0.9)(encoding@0.1.13)(utf-8-validate@5.0.10)
       '@turnkey/sdk-browser':
-        specifier: ^4.0.0
-        version: 4.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
+        specifier: 5.0.0
+        version: 5.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@turnkey/sdk-react':
-        specifier: 4.2.1
-        version: 4.2.1(@types/react@18.3.0)(bufferutil@4.0.9)(encoding@0.1.13)(prop-types@15.8.1)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)
+        specifier: 5.0.0
+        version: 5.0.0(@types/react@18.3.0)(bufferutil@4.0.9)(encoding@0.1.13)(prop-types@15.8.1)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@turnkey/sdk-server':
-        specifier: ^3.0.1
-        version: 3.0.1(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)
+        specifier: 4.0.0
+        version: 4.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@types/node':
         specifier: 20.3.1
         version: 20.3.1
@@ -682,8 +682,8 @@ packages:
   '@swc/helpers@0.5.5':
     resolution: {integrity: sha512-KGYxvIOXcceOAbEk4bi/dVLEK9z8sZ0uBB3Il5b1rhfClSpcX0yfRO0KmTkqR2cnQDymwLB+25ZyMzICg/cm/A==}
 
-  '@turnkey/api-key-stamper@0.4.4':
-    resolution: {integrity: sha512-KXvf2yV3OkSrZYEnHSgOwy2XS7Q4+XNwRkgRhDNsiYvgz8KNGLbqXg0/aAlkTIUT7NYODZ3iaGMml0DtyzGeDQ==}
+  '@turnkey/api-key-stamper@0.4.5':
+    resolution: {integrity: sha512-8UeYt/2WtMrK2uSFzjiRXdCVc9SmKlMVuA4f1Z+SlxcsW0wlEpNM/7bd8N4VVVAjoE8Yy50Vhk3ylfQFtlaKsQ==}
     engines: {node: '>=18.0.0'}
 
   '@turnkey/crypto@2.3.1':
@@ -694,27 +694,31 @@ packages:
     resolution: {integrity: sha512-ptLgcpWVt34KTPx0omF2QLJrosW6I//clCJ4G2+yngYFCzrdR0yBchV/BOcfME67mK1v3MmauyXl9AAnQTmB4Q==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/http@3.0.0':
-    resolution: {integrity: sha512-QFW9ZOPQy/a5DWL7GU9awb2dyQvRWwU5cSAmyYef/wBOdwy4Rm9k541eX2HDymzubXO0vkHHDw3enbUHIu9RmA==}
+  '@turnkey/http@3.4.0':
+    resolution: {integrity: sha512-7sXPlOlF3YVqLFoBm2YyaO5d0aQXpfsij2BgtOHfhLmPkMWm5yMz2T7UlI3lf67SftwweOQ+5/ZkD9oJwi95tg==}
     engines: {node: '>=16.0.0'}
 
   '@turnkey/iframe-stamper@2.5.0':
     resolution: {integrity: sha512-XjntbA5CNjxGRH+loceAlVLL9PG9Q4Y7p5zjBm4DeKclhD6lpUl9h8INArMEXIFbfLwLjjS6Q+SmQG4BHvNY6A==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/sdk-browser@4.0.0':
-    resolution: {integrity: sha512-qO7vIDaaibbrgF4GgzU2WVedvMuwKYAR2vewBs2ZNdeuFFW6mlddP2IlgZ2dCwptZ3NC+6mSFyFgjJ0gX217Hg==}
+  '@turnkey/indexed-db-stamper@1.0.0':
+    resolution: {integrity: sha512-FWdU6aX3a48z//IqDi6cwELDrVX6v/PRdCdFgdxj0ccaLzW9nC1ZaZzJ9i4kwlZ8j/XQnwR3iAJ8lDNnd55KEg==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/sdk-react@4.2.1':
-    resolution: {integrity: sha512-5KsvH22w3vQvZUV3x0XqypthC7K3tHnQQTGVurvljy2jl4AUCxQqwcII87LOQO/g5sZMuTXreL3SAplcvCiqXQ==}
+  '@turnkey/sdk-browser@5.0.0':
+    resolution: {integrity: sha512-vn3SX7YKW/op0MKkpKXFZq+VPx0GoWlwTnyh22Ts+U/LgfyWAu2s+PCIfof9/9AYxAxHdGQezeAe7WEmNsXreQ==}
+    engines: {node: '>=18.0.0'}
+
+  '@turnkey/sdk-react@5.0.0':
+    resolution: {integrity: sha512-FqOcUyHSL/51/EpgQvqAm6+9h7H4UyDKgZuuiWSml8LHR+TzJrD1beO7z2DhlhF0teogH6iswigZGArtX8HJ3w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@types/react': ^18.2.75
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
-  '@turnkey/sdk-server@3.0.1':
-    resolution: {integrity: sha512-mOu9ZkVMihNd3FYmn/kGsIYxnFihytKxOlqCysZi+32Ea0VtDmv8CbJMdNj2f2fnoBL20gOqc454KJVSg47phg==}
+  '@turnkey/sdk-server@4.0.0':
+    resolution: {integrity: sha512-vZaMvkz+OGJ2Rj2L617Ad47u1NONVwYkSFXDmVZDdhqLFkLe2y/kVZ950RgoEmp0ejWSfd12sHlbG7/ChG4zfw==}
     engines: {node: '>=18.0.0'}
 
   '@turnkey/wallet-stamper@1.0.3':
@@ -3115,7 +3119,7 @@ snapshots:
       '@swc/counter': 0.1.3
       tslib: 2.8.1
 
-  '@turnkey/api-key-stamper@0.4.4':
+  '@turnkey/api-key-stamper@0.4.5':
     dependencies:
       '@noble/curves': 1.8.1
       '@turnkey/encoding': 0.4.0
@@ -3132,9 +3136,9 @@ snapshots:
 
   '@turnkey/encoding@0.4.0': {}
 
-  '@turnkey/http@3.0.0(encoding@0.1.13)':
+  '@turnkey/http@3.4.0(encoding@0.1.13)':
     dependencies:
-      '@turnkey/api-key-stamper': 0.4.4
+      '@turnkey/api-key-stamper': 0.4.5
       '@turnkey/encoding': 0.4.0
       '@turnkey/webauthn-stamper': 0.5.0
       cross-fetch: 3.2.0(encoding@0.1.13)
@@ -3143,13 +3147,19 @@ snapshots:
 
   '@turnkey/iframe-stamper@2.5.0': {}
 
-  '@turnkey/sdk-browser@4.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)':
+  '@turnkey/indexed-db-stamper@1.0.0':
     dependencies:
-      '@turnkey/api-key-stamper': 0.4.4
+      '@turnkey/api-key-stamper': 0.4.5
+      '@turnkey/encoding': 0.4.0
+
+  '@turnkey/sdk-browser@5.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)':
+    dependencies:
+      '@turnkey/api-key-stamper': 0.4.5
       '@turnkey/crypto': 2.3.1
       '@turnkey/encoding': 0.4.0
-      '@turnkey/http': 3.0.0(encoding@0.1.13)
+      '@turnkey/http': 3.4.0(encoding@0.1.13)
       '@turnkey/iframe-stamper': 2.5.0
+      '@turnkey/indexed-db-stamper': 1.0.0
       '@turnkey/wallet-stamper': 1.0.3(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@turnkey/webauthn-stamper': 0.5.0
       bs58check: 3.0.1
@@ -3163,7 +3173,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@turnkey/sdk-react@4.2.1(@types/react@18.3.0)(bufferutil@4.0.9)(encoding@0.1.13)(prop-types@15.8.1)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)':
+  '@turnkey/sdk-react@5.0.0(@types/react@18.3.0)(bufferutil@4.0.9)(encoding@0.1.13)(prop-types@15.8.1)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@emotion/react': 11.14.0(@types/react@18.3.0)(react@18.3.0)
       '@emotion/styled': 11.14.0(@emotion/react@11.14.0(@types/react@18.3.0)(react@18.3.0))(@types/react@18.3.0)(react@18.3.0)
@@ -3173,8 +3183,8 @@ snapshots:
       '@noble/hashes': 1.4.0
       '@react-oauth/google': 0.12.1(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
       '@turnkey/crypto': 2.3.1
-      '@turnkey/sdk-browser': 4.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
-      '@turnkey/sdk-server': 3.0.1(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)
+      '@turnkey/sdk-browser': 5.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
+      '@turnkey/sdk-server': 4.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@turnkey/wallet-stamper': 1.0.3(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@types/react': 18.3.0
       libphonenumber-js: 1.11.20
@@ -3200,25 +3210,16 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@turnkey/sdk-server@3.0.1(bufferutil@4.0.9)(encoding@0.1.13)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)':
+  '@turnkey/sdk-server@4.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)':
     dependencies:
-      '@turnkey/api-key-stamper': 0.4.4
-      '@turnkey/http': 3.0.0(encoding@0.1.13)
+      '@turnkey/api-key-stamper': 0.4.5
+      '@turnkey/http': 3.4.0(encoding@0.1.13)
       '@turnkey/wallet-stamper': 1.0.3(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
       buffer: 6.0.3
       cross-fetch: 3.2.0(encoding@0.1.13)
-      next: 15.2.4(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
     transitivePeerDependencies:
-      - '@babel/core'
-      - '@opentelemetry/api'
-      - '@playwright/test'
-      - babel-plugin-macros
-      - babel-plugin-react-compiler
       - bufferutil
       - encoding
-      - react
-      - react-dom
-      - sass
       - typescript
       - utf-8-validate
       - zod

@@ -74,11 +74,8 @@ export default function AuthPage() {
     const manageSession = async () => {
       if (turnkey) {
         const session = await turnkey?.getSession();
-        if (session && Date.now() < session.expiry) {
+        if (session) {
           await handleAuthSuccess();
-        }
-        else {
-          await turnkey?.logout();
         }
       }
     };
