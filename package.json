@@ -18,7 +18,7 @@
     "@noble/hashes": "1.4.0",
     "@solana/web3.js": "^1.95.8",
     "@turnkey/sdk-browser": "5.0.0",
-    "@turnkey/sdk-react": "https://pkg.csb.dev/tkhq/sdk/commit/d38632e1/@turnkey/sdk-react",
+    "@turnkey/sdk-react": "https://pkg.csb.dev/tkhq/sdk/commit/021b7768/@turnkey/sdk-react",
     "@turnkey/sdk-server": "4.0.0",
     "@types/node": "20.3.1",
     "@types/react": "18.3.0",
