@@ -288,6 +288,7 @@ export default function Dashboard() {
 
   const handleLogout: any = async () => {
     await turnkey?.logout();
+    await indexedDbClient?.resetKeyPair();
     router.push("/");
   };
 
