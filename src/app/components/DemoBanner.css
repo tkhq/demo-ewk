@@ -1,0 +1,29 @@
+.demoBanner {
+  position: fixed;
+  top: 5rem; /* Position below the navbar which is 3rem height + 1rem top + 1rem bottom padding */
+  left: 0;
+  width: 100%;
+  z-index: 999; /* Below navbar but above other content */
+  border-bottom: 1px solid #e5e7eb;
+  background-color: rgba(243, 244, 246, 0.3);
+  padding: 12px 16px;
+  text-align: center;
+}
+
+.demoBannerContent {
+  margin: 0 auto;
+  max-width: 896px;
+}
+
+.demoBannerTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0;
+}
+
+.demoBannerSubtitle {
+  font-size: 12px;
+  color: rgba(107, 114, 128, 0.8);
+  margin: 0;
+}
