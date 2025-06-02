@@ -33,11 +33,11 @@ importers:
         specifier: 5.0.0
         version: 5.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@turnkey/sdk-react':
-        specifier: https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/sdk-react
-        version: https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/sdk-react(@types/react@18.3.0)(bufferutil@4.0.9)(encoding@0.1.13)(prop-types@15.8.1)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)
+        specifier: 5.2.0
+        version: 5.2.0(@types/react@18.3.0)(bufferutil@4.0.9)(encoding@0.1.13)(prop-types@15.8.1)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@turnkey/sdk-server':
-        specifier: 4.0.0
-        version: 4.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
+        specifier: 4.1.0
+        version: 4.1.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@types/node':
         specifier: 20.3.1
         version: 20.3.1
@@ -71,6 +71,9 @@ importers:
       install:
         specifier: ^0.13.0
         version: 0.13.0
+      jwt-decode:
+        specifier: ^4.0.0
+        version: 4.0.0
       next:
         specifier: ^14.2.20
         version: 14.2.24(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
@@ -686,91 +689,81 @@ packages:
     resolution: {integrity: sha512-8UeYt/2WtMrK2uSFzjiRXdCVc9SmKlMVuA4f1Z+SlxcsW0wlEpNM/7bd8N4VVVAjoE8Yy50Vhk3ylfQFtlaKsQ==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/api-key-stamper@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/api-key-stamper':
-    resolution: {tarball: https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/api-key-stamper}
-    version: 0.4.5
+  '@turnkey/api-key-stamper@0.4.6':
+    resolution: {integrity: sha512-zUcbhOunsSD//CIKAbfyX9FWchiHcO/CjOdBKvbB+8w6gk/m4NxchVrYCdqdrtxzPFdRYAdFjcUnN0FBvDKobw==}
     engines: {node: '>=18.0.0'}
 
   '@turnkey/crypto@2.3.1':
     resolution: {integrity: sha512-fHKCw0inuThEKIpZnC8pvz16egZHf08wES0LdSkM9XrGDcI7p0eqF7nAHgfAMW/0qNVZD8AKW+g/5O97HBwZ4w==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/crypto@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/crypto':
-    resolution: {tarball: https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/crypto}
-    version: 2.3.1
+  '@turnkey/crypto@2.4.0':
+    resolution: {integrity: sha512-jh3uE2W8sUvrI0KQsJ8SF/pvTeumhE3YmFoNB7lcqzIfvamNWYCgg3iWoA64W7U3uEzcFtNBefZsWySsVcl2Ew==}
     engines: {node: '>=18.0.0'}
 
   '@turnkey/encoding@0.4.0':
     resolution: {integrity: sha512-ptLgcpWVt34KTPx0omF2QLJrosW6I//clCJ4G2+yngYFCzrdR0yBchV/BOcfME67mK1v3MmauyXl9AAnQTmB4Q==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/encoding@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/encoding':
-    resolution: {tarball: https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/encoding}
-    version: 0.4.0
+  '@turnkey/encoding@0.5.0':
+    resolution: {integrity: sha512-nRlKRQa6B5/xltGUKN1iKo4h4YC/0iFz0fAuFFZevc+YGDj7ddAP/3HkWmVvLmdoicUgs9rxvWbLRlgqPkbwzQ==}
     engines: {node: '>=18.0.0'}
 
   '@turnkey/http@3.4.0':
     resolution: {integrity: sha512-7sXPlOlF3YVqLFoBm2YyaO5d0aQXpfsij2BgtOHfhLmPkMWm5yMz2T7UlI3lf67SftwweOQ+5/ZkD9oJwi95tg==}
     engines: {node: '>=16.0.0'}
 
-  '@turnkey/http@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/http':
-    resolution: {tarball: https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/http}
-    version: 3.4.0
+  '@turnkey/http@3.4.1':
+    resolution: {integrity: sha512-U/MouBgR6RNrp/1v24opJ3Smj5ke0+75we64cA8o1aMaIZqcWbunqcpXa1Eacy8jZl7KzIM8fct6B3aI3+ns0A==}
     engines: {node: '>=16.0.0'}
 
   '@turnkey/iframe-stamper@2.5.0':
     resolution: {integrity: sha512-XjntbA5CNjxGRH+loceAlVLL9PG9Q4Y7p5zjBm4DeKclhD6lpUl9h8INArMEXIFbfLwLjjS6Q+SmQG4BHvNY6A==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/iframe-stamper@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/iframe-stamper':
-    resolution: {tarball: https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/iframe-stamper}
-    version: 2.5.0
-    engines: {node: '>=18.0.0'}
-
   '@turnkey/indexed-db-stamper@1.0.0':
     resolution: {integrity: sha512-FWdU6aX3a48z//IqDi6cwELDrVX6v/PRdCdFgdxj0ccaLzW9nC1ZaZzJ9i4kwlZ8j/XQnwR3iAJ8lDNnd55KEg==}
+    engines: {node: '>=18.0.0'}
+
+  '@turnkey/indexed-db-stamper@1.1.0':
+    resolution: {integrity: sha512-tgGtHT7reAqSrO+aOAwfpVIln+N7nk81yKXJ1e1+5qv9PfJQjE8+mMxolinCAIZwIqsaFBtjdjm6NCW+Me7rcw==}
     engines: {node: '>=18.0.0'}
 
   '@turnkey/sdk-browser@5.0.0':
     resolution: {integrity: sha512-vn3SX7YKW/op0MKkpKXFZq+VPx0GoWlwTnyh22Ts+U/LgfyWAu2s+PCIfof9/9AYxAxHdGQezeAe7WEmNsXreQ==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/sdk-browser@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/sdk-browser':
-    resolution: {tarball: https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/sdk-browser}
-    version: 5.0.0
+  '@turnkey/sdk-browser@5.2.0':
+    resolution: {integrity: sha512-kKySzveVQF3sFCE8mGv69eVThNsYvDb5PO2x3+0YpX3ZDlug12d/o2QFvl48yGYfNlXfju9vOwZHWQgnKTRjgg==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/sdk-react@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/sdk-react':
-    resolution: {tarball: https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/sdk-react}
-    version: 5.0.1
+  '@turnkey/sdk-react@5.2.0':
+    resolution: {integrity: sha512-w5V9OLx+tnlZiftBldT0ItwpWHUSJEVrUcFeL017RZJrc3WU3Ht6X/N3tonxW1yonNnKt+p22jIXgk0pNpLuXg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@types/react': ^18.2.75
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
-  '@turnkey/sdk-server@4.0.0':
-    resolution: {integrity: sha512-vZaMvkz+OGJ2Rj2L617Ad47u1NONVwYkSFXDmVZDdhqLFkLe2y/kVZ950RgoEmp0ejWSfd12sHlbG7/ChG4zfw==}
+  '@turnkey/sdk-server@4.1.0':
+    resolution: {integrity: sha512-bmpWOkiKML57obR5UdzbXpyuDWV58WpypWPEmP6SGCPKJMb7BOTrgxouZlOpDbLP2TUNuH5GoGX1p3W5mX+8yg==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/sdk-server@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/sdk-server':
-    resolution: {tarball: https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/sdk-server}
-    version: 4.0.0
+  '@turnkey/sdk-types@0.1.0':
+    resolution: {integrity: sha512-kpgXigg3fMG6xLDoE3F79M7kCpIsNJi8zqzVJEJwyY1Xtpw5SnEbCIuw3NEp35yst3S1+D4OszUc9K2l0E0qLA==}
     engines: {node: '>=18.0.0'}
 
   '@turnkey/wallet-stamper@1.0.3':
     resolution: {integrity: sha512-8DMuVPo/u8oIzQ9Snsa24ZQO3nXVMfpd8VnlPLfZiW2jjZHPFyBGCJOYSArfp+W2xoudpYVu//JElBAVxk/u/g==}
 
-  '@turnkey/wallet-stamper@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/wallet-stamper':
-    resolution: {tarball: https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/wallet-stamper}
-    version: 1.0.3
+  '@turnkey/wallet-stamper@1.0.4':
+    resolution: {integrity: sha512-xSkkQh30SzhYFv/2Q0+oARZbReSqzwjxi6j3mbmOn/udDyjYjz9mdV7rm+rN4+iwDD64ZjSIJTK0flotYjIWHw==}
 
   '@turnkey/webauthn-stamper@0.5.0':
     resolution: {integrity: sha512-iUbTUwD4f4ibdLy5PWWb7ITEz4S4VAP9/mNjFhoRY3cKVVTDfmykrVTKjPOIHWzDgAmLtgrLvySIIC9ZBVENBw==}
     engines: {node: '>=18.0.0'}
 
-  '@turnkey/webauthn-stamper@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/webauthn-stamper':
-    resolution: {tarball: https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/webauthn-stamper}
-    version: 0.5.0
+  '@turnkey/webauthn-stamper@0.5.1':
+    resolution: {integrity: sha512-eBwceTStSSettBQsLo3X5eJEarcK9f20cGUdi6jOesXOP86iYEIgR4+aH2qyCQ3eaovj+Hl44UGngXueIm/tKg==}
     engines: {node: '>=18.0.0'}
 
   '@types/connect@3.4.38':
@@ -1770,6 +1763,10 @@ packages:
   jsx-ast-utils@3.3.5:
     resolution: {integrity: sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==}
     engines: {node: '>=4.0'}
+
+  jwt-decode@4.0.0:
+    resolution: {integrity: sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==}
+    engines: {node: '>=18'}
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -3176,10 +3173,10 @@ snapshots:
       '@turnkey/encoding': 0.4.0
       sha256-uint8array: 0.10.7
 
-  '@turnkey/api-key-stamper@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/api-key-stamper':
+  '@turnkey/api-key-stamper@0.4.6':
     dependencies:
       '@noble/curves': 1.8.1
-      '@turnkey/encoding': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/encoding
+      '@turnkey/encoding': 0.5.0
       sha256-uint8array: 0.10.7
 
   '@turnkey/crypto@2.3.1':
@@ -3191,7 +3188,7 @@ snapshots:
       bs58: 5.0.0
       bs58check: 3.0.1
 
-  '@turnkey/crypto@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/crypto':
+  '@turnkey/crypto@2.4.0':
     dependencies:
       '@noble/ciphers': 0.5.3
       '@noble/curves': 1.4.0
@@ -3201,7 +3198,7 @@ snapshots:
 
   '@turnkey/encoding@0.4.0': {}
 
-  '@turnkey/encoding@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/encoding': {}
+  '@turnkey/encoding@0.5.0': {}
 
   '@turnkey/http@3.4.0(encoding@0.1.13)':
     dependencies:
@@ -3212,23 +3209,26 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@turnkey/http@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/http(encoding@0.1.13)':
+  '@turnkey/http@3.4.1(encoding@0.1.13)':
     dependencies:
-      '@turnkey/api-key-stamper': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/api-key-stamper
-      '@turnkey/encoding': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/encoding
-      '@turnkey/webauthn-stamper': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/webauthn-stamper
+      '@turnkey/api-key-stamper': 0.4.6
+      '@turnkey/encoding': 0.5.0
+      '@turnkey/webauthn-stamper': 0.5.1
       cross-fetch: 3.2.0(encoding@0.1.13)
     transitivePeerDependencies:
       - encoding
 
   '@turnkey/iframe-stamper@2.5.0': {}
 
-  '@turnkey/iframe-stamper@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/iframe-stamper': {}
-
   '@turnkey/indexed-db-stamper@1.0.0':
     dependencies:
       '@turnkey/api-key-stamper': 0.4.5
       '@turnkey/encoding': 0.4.0
+
+  '@turnkey/indexed-db-stamper@1.1.0':
+    dependencies:
+      '@turnkey/api-key-stamper': 0.4.6
+      '@turnkey/encoding': 0.5.0
 
   '@turnkey/sdk-browser@5.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)':
     dependencies:
@@ -3251,16 +3251,17 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@turnkey/sdk-browser@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/sdk-browser(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)':
+  '@turnkey/sdk-browser@5.2.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)':
     dependencies:
-      '@turnkey/api-key-stamper': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/api-key-stamper
-      '@turnkey/crypto': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/crypto
-      '@turnkey/encoding': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/encoding
-      '@turnkey/http': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/http(encoding@0.1.13)
-      '@turnkey/iframe-stamper': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/iframe-stamper
-      '@turnkey/indexed-db-stamper': 1.0.0
-      '@turnkey/wallet-stamper': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/wallet-stamper(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
-      '@turnkey/webauthn-stamper': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/webauthn-stamper
+      '@turnkey/api-key-stamper': 0.4.6
+      '@turnkey/crypto': 2.4.0
+      '@turnkey/encoding': 0.5.0
+      '@turnkey/http': 3.4.1(encoding@0.1.13)
+      '@turnkey/iframe-stamper': 2.5.0
+      '@turnkey/indexed-db-stamper': 1.1.0
+      '@turnkey/sdk-types': 0.1.0
+      '@turnkey/wallet-stamper': 1.0.4(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
+      '@turnkey/webauthn-stamper': 0.5.1
       bs58check: 3.0.1
       buffer: 6.0.3
       cross-fetch: 3.2.0(encoding@0.1.13)
@@ -3272,7 +3273,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@turnkey/sdk-react@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/sdk-react(@types/react@18.3.0)(bufferutil@4.0.9)(encoding@0.1.13)(prop-types@15.8.1)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)':
+  '@turnkey/sdk-react@5.2.0(@types/react@18.3.0)(bufferutil@4.0.9)(encoding@0.1.13)(prop-types@15.8.1)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)(typescript@5.1.3)(utf-8-validate@5.0.10)':
     dependencies:
       '@emotion/react': 11.14.0(@types/react@18.3.0)(react@18.3.0)
       '@emotion/styled': 11.14.0(@emotion/react@11.14.0(@types/react@18.3.0)(react@18.3.0))(@types/react@18.3.0)(react@18.3.0)
@@ -3281,11 +3282,13 @@ snapshots:
       '@mui/material': 6.4.5(@emotion/react@11.14.0(@types/react@18.3.0)(react@18.3.0))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@18.3.0)(react@18.3.0))(@types/react@18.3.0)(react@18.3.0))(@types/react@18.3.0)(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
       '@noble/hashes': 1.4.0
       '@react-oauth/google': 0.12.1(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
-      '@turnkey/crypto': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/crypto
-      '@turnkey/sdk-browser': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/sdk-browser(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
-      '@turnkey/sdk-server': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/sdk-server(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
-      '@turnkey/wallet-stamper': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/wallet-stamper(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
+      '@turnkey/crypto': 2.4.0
+      '@turnkey/sdk-browser': 5.2.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
+      '@turnkey/sdk-server': 4.1.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)
+      '@turnkey/sdk-types': 0.1.0
+      '@turnkey/wallet-stamper': 1.0.4(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
       '@types/react': 18.3.0
+      jwt-decode: 4.0.0
       libphonenumber-js: 1.11.20
       next: 15.2.4(react-dom@18.3.0(react@18.3.0))(react@18.3.0)
       react: 18.3.0
@@ -3309,11 +3312,11 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@turnkey/sdk-server@4.0.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)':
+  '@turnkey/sdk-server@4.1.0(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)':
     dependencies:
-      '@turnkey/api-key-stamper': 0.4.5
-      '@turnkey/http': 3.4.0(encoding@0.1.13)
-      '@turnkey/wallet-stamper': 1.0.3(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
+      '@turnkey/api-key-stamper': 0.4.6
+      '@turnkey/http': 3.4.1(encoding@0.1.13)
+      '@turnkey/wallet-stamper': 1.0.4(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
       buffer: 6.0.3
       cross-fetch: 3.2.0(encoding@0.1.13)
     transitivePeerDependencies:
@@ -3323,19 +3326,7 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@turnkey/sdk-server@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/sdk-server(bufferutil@4.0.9)(encoding@0.1.13)(typescript@5.1.3)(utf-8-validate@5.0.10)':
-    dependencies:
-      '@turnkey/api-key-stamper': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/api-key-stamper
-      '@turnkey/http': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/http(encoding@0.1.13)
-      '@turnkey/wallet-stamper': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/wallet-stamper(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
-      buffer: 6.0.3
-      cross-fetch: 3.2.0(encoding@0.1.13)
-    transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - typescript
-      - utf-8-validate
-      - zod
+  '@turnkey/sdk-types@0.1.0': {}
 
   '@turnkey/wallet-stamper@1.0.3(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)':
     dependencies:
@@ -3349,10 +3340,10 @@ snapshots:
       - utf-8-validate
       - zod
 
-  '@turnkey/wallet-stamper@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/wallet-stamper(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)':
+  '@turnkey/wallet-stamper@1.0.4(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)':
     dependencies:
-      '@turnkey/crypto': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/crypto
-      '@turnkey/encoding': https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/encoding
+      '@turnkey/crypto': 2.4.0
+      '@turnkey/encoding': 0.5.0
     optionalDependencies:
       viem: 2.23.2(bufferutil@4.0.9)(typescript@5.1.3)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
@@ -3365,7 +3356,7 @@ snapshots:
     dependencies:
       sha256-uint8array: 0.10.7
 
-  '@turnkey/webauthn-stamper@https://pkg.csb.dev/tkhq/sdk/commit/3eb91abc/@turnkey/webauthn-stamper':
+  '@turnkey/webauthn-stamper@0.5.1':
     dependencies:
       sha256-uint8array: 0.10.7
 
@@ -4607,6 +4598,8 @@ snapshots:
       array.prototype.flat: 1.3.3
       object.assign: 4.1.7
       object.values: 1.2.1
+
+  jwt-decode@4.0.0: {}
 
   keyv@4.5.4:
     dependencies:
