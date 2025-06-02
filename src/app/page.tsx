@@ -93,7 +93,7 @@ export default function AuthPage() {
   };
 
   const toggleSocials = (
-    key: keyof SocialConfig | keyof SocialConfig["providers"],
+    key: keyof SocialConfig | keyof SocialConfig["providers"]
   ) => {
     setConfig((prev) => {
       if (key === "enabled") {
@@ -157,6 +157,7 @@ export default function AuthPage() {
     googleEnabled: config.socials.providers.google,
     facebookEnabled: config.socials.providers.facebook,
     openOAuthInPage: true,
+    socialLinking: true,
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -221,8 +222,8 @@ export default function AuthPage() {
                                     provider === "google"
                                       ? "8px 8px 0 0"
                                       : provider === "facebook"
-                                        ? "0 0 8px 8px"
-                                        : undefined,
+                                      ? "0 0 8px 8px"
+                                      : undefined,
                                 }}
                               >
                                 <div className="labelContainer">
@@ -239,12 +240,12 @@ export default function AuthPage() {
                                   checked={enabled}
                                   onChange={() =>
                                     toggleSocials(
-                                      provider as keyof SocialConfig["providers"],
+                                      provider as keyof SocialConfig["providers"]
                                     )
                                   }
                                 />
                               </div>
-                            ),
+                            )
                           )}
                         </div>
                       )}
@@ -279,7 +280,7 @@ export default function AuthPage() {
                         </div>
                       )}
                     </Draggable>
-                  ),
+                  )
                 )}
                 {provided.placeholder}
               </div>
