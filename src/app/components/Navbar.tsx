@@ -1,6 +1,6 @@
-import React from "react";
-import "./Navbar.css";
-import { DemoBadge } from "./DemoBadge";
+import React from 'react';
+import './Navbar.css';
+import { DemoBadge } from './DemoBadge';
 
 const Navbar = () => {
   return (
@@ -31,8 +31,8 @@ const Navbar = () => {
             </defs>
           </svg>
         </a>
+        <DemoBadge />
       </div>
-      <DemoBadge />
     </>
   );
 };

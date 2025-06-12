@@ -1,16 +1,9 @@
-import "./DemoBadge.css";
+// Demo badge styled with Tailwind classes
+// Demo badge styled purely with custom CSS (no Tailwind)
+import './DemoBadge.css';
+
+import React from 'react';
 
 export function DemoBadge() {
-  return (
-    <div className="demoBadge">
-      <div className="demoBadgeContent">
-        <p className="demoBadgeTitle">
-          Turnkey Demo Product
-        </p>
-        <p className="demoBadgeSubtitle">
-          Not a production system. Not in scope for security research.
-        </p>
-      </div>
-    </div>
-  );
+  return <div className="demoBadge">Demo</div>;
 }

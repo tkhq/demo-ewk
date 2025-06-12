@@ -1,29 +1,19 @@
 .demoBadge {
-  position: fixed;
-  top: 5rem; /* Position below the navbar which is 3rem height + 1rem top + 1rem bottom padding */
-  left: 0;
-  width: 100%;
-  z-index: 999; /* Below navbar but above other content */
-  border-bottom: 1px solid #e5e7eb;
-  background-color: rgba(243, 244, 246, 0.3);
-  padding: 12px 16px;
-  text-align: center;
-}
-
-.demoBadgeContent {
-  margin: 0 auto;
-  max-width: 896px;
-}
-
-.demoBadgeTitle {
-  font-size: 14px;
+  margin-bottom: 12px;
+  margin-left: 4px;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px; /* py-0.5 px-2.5 */
+  font-size: 0.75rem; /* 12px */
   font-weight: 600;
-  color: #6b7280;
-  margin: 0;
+  line-height: 1; /* Ensures vertical centering */
+  border-radius: 9999px; /* Fully rounded */
+  border: 1px solid var(--accent-color); /* Violet-500 */
+  color: var(--accent-color); /* Same as border */
+  background-color: rgba(99, 102, 241, 0); /* Transparent */
+  transition: background-color 0.2s ease-in-out;
 }
 
-.demoBadgeSubtitle {
-  font-size: 12px;
-  color: rgba(107, 114, 128, 0.8);
-  margin: 0;
+.demoBadge:hover {
+  background-color: rgba(99, 102, 241, 0.1);
 }
