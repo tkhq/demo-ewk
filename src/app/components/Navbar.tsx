@@ -1,6 +1,6 @@
 import React from "react";
 import "./Navbar.css";
-import { DemoBanner } from "./DemoBanner";
+import { DemoBadge } from "./DemoBadge";
 
 const Navbar = () => {
   return (
@@ -32,7 +32,7 @@ const Navbar = () => {
           </svg>
         </a>
       </div>
-      <DemoBanner />
+      <DemoBadge />
     </>
   );
 };

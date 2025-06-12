@@ -1,4 +1,4 @@
-.demoBanner {
+.demoBadge {
   position: fixed;
   top: 5rem; /* Position below the navbar which is 3rem height + 1rem top + 1rem bottom padding */
   left: 0;
@@ -10,19 +10,19 @@
   text-align: center;
 }
 
-.demoBannerContent {
+.demoBadgeContent {
   margin: 0 auto;
   max-width: 896px;
 }
 
-.demoBannerTitle {
+.demoBadgeTitle {
   font-size: 14px;
   font-weight: 600;
   color: #6b7280;
   margin: 0;
 }
 
-.demoBannerSubtitle {
+.demoBadgeSubtitle {
   font-size: 12px;
   color: rgba(107, 114, 128, 0.8);
   margin: 0;
