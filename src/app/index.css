@@ -15,6 +15,7 @@ body {
   align-items: center;
   padding: 8rem;
   padding-bottom: 0rem;
+  padding-top: calc(8rem + 3rem + 3rem); /* Account for navbar (3rem) + banner (~3rem) + original padding */
   gap: 60px;
   position: relative;
 }

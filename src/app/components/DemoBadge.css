@@ -1,0 +1,19 @@
+.demoBadge {
+  margin-bottom: 12px;
+  margin-left: 4px;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px; /* py-0.5 px-2.5 */
+  font-size: 0.75rem; /* 12px */
+  font-weight: 600;
+  line-height: 1; /* Ensures vertical centering */
+  border-radius: 9999px; /* Fully rounded */
+  border: 1px solid var(--accent-color); /* Violet-500 */
+  color: var(--accent-color); /* Same as border */
+  background-color: rgba(99, 102, 241, 0); /* Transparent */
+  transition: background-color 0.2s ease-in-out;
+}
+
+.demoBadge:hover {
+  background-color: rgba(99, 102, 241, 0.1);
+}
